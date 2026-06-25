@@ -2,63 +2,60 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="apple-touch-icon" href="logo-icon.png">
 <title>Core Cleaning — Cold Calls</title>
 <link rel="icon" type="image/png" href="logo-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#F4F5F7;
-  --white:#FFFFFF;
-  --border:#E2E4EA;
-  --border-light:#EDEEF2;
-  --text:#111827;
-  --text2:#6B7280;
-  --text3:#9CA3AF;
-  --teal:#0D9488;
-  --teal-dark:#0F766E;
-  --teal-light:#F0FDFA;
-  --emerald:#059669;
-  --emerald-bg:#ECFDF5;
-  --rose:#E11D48;
-  --rose-bg:#FFF1F2;
-  --amber:#B45309;
-  --amber-bg:#FFFBEB;
-  --blue:#2563EB;
-  --blue-bg:#EFF6FF;
-  --violet:#7C3AED;
-  --violet-bg:#F5F3FF;
-  --radius:6px;
+  --bg:#F4F5F7;--white:#FFFFFF;--border:#E2E4EA;--border-light:#EDEEF2;
+  --text:#111827;--text2:#6B7280;--text3:#9CA3AF;
+  --teal:#0D9488;--teal-dark:#0F766E;--teal-light:#F0FDFA;
+  --emerald:#059669;--emerald-bg:#ECFDF5;
+  --rose:#E11D48;--rose-bg:#FFF1F2;
+  --amber:#B45309;--amber-bg:#FFFBEB;
+  --blue:#2563EB;--blue-bg:#EFF6FF;
+  --violet:#7C3AED;--violet-bg:#F5F3FF;
+  --radius:8px;
+  --safe-b:env(safe-area-inset-bottom,0px);
 }
-body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:13px;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
-button{cursor:pointer;font-family:inherit;letter-spacing:inherit}
-input,textarea,select{font-family:inherit;letter-spacing:inherit}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Outfit',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:-webkit-fill-available;font-size:14px;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;padding-bottom:var(--safe-b)}
+button{cursor:pointer;font-family:inherit;letter-spacing:inherit;-webkit-tap-highlight-color:transparent}
+input,textarea,select{font-family:inherit;letter-spacing:inherit;font-size:16px;-webkit-appearance:none;appearance:none}
 ::selection{background:var(--teal);color:#fff}
+a{-webkit-tap-highlight-color:transparent}
 
 /* ── Header ── */
-.header{background:var(--white);border-bottom:1px solid var(--border)}
-.header-inner{max-width:1440px;margin:0 auto;padding:0 20px}
-.header-top{display:flex;align-items:center;height:52px;gap:12px}
-.logo{display:flex;align-items:center;gap:10px;white-space:nowrap}
-.logo img{height:28px;width:auto}
-.header-actions{display:flex;gap:6px;margin-left:auto;align-items:center}
+.header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 16px}
+.header-top{display:flex;align-items:center;height:56px;gap:12px}
+.logo{display:flex;align-items:center;flex-shrink:0}
+.logo img{height:36px;width:auto}
+.header-actions{display:flex;gap:8px;margin-left:auto;align-items:center}
 
 .search-wrap{position:relative}
-.search-wrap svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
-.search-input{padding:6px 10px 6px 30px;background:var(--bg);border:1px solid transparent;border-radius:var(--radius);color:var(--text);font-size:12px;width:200px;transition:.2s}
-.search-input:focus{outline:none;border-color:var(--teal);background:var(--white);width:260px;box-shadow:0 0 0 3px rgba(13,148,136,.08)}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.search-input{padding:8px 12px 8px 32px;background:var(--bg);border:1px solid transparent;border-radius:var(--radius);color:var(--text);font-size:14px;width:220px;transition:.2s}
+.search-input:focus{outline:none;border-color:var(--teal);background:var(--white);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
 .search-input::placeholder{color:var(--text3)}
 
-.btn{padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);font-size:12px;font-weight:500;transition:.15s;background:var(--white);color:var(--text);line-height:1.4}
+.btn{padding:8px 16px;border-radius:var(--radius);border:1px solid var(--border);font-size:13px;font-weight:500;transition:.15s;background:var(--white);color:var(--text);line-height:1.4;white-space:nowrap}
 .btn:hover{background:var(--bg);border-color:#d1d5db}
+.btn:active{transform:scale(.97)}
 .btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
 .btn-primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
 .btn-danger{color:var(--rose);border-color:var(--border)}
 .btn-danger:hover{background:var(--rose-bg);border-color:var(--rose)}
-.btn-sm{padding:3px 8px;font-size:11px}
-.btn-icon{padding:4px 6px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius);border:1px solid transparent;background:none;color:var(--text2);transition:.15s}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-icon{padding:8px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius);border:1px solid transparent;background:none;color:var(--text2);transition:.15s;min-width:36px;min-height:36px}
 .btn-icon:hover{background:var(--bg);color:var(--text)}
+.btn-icon:active{transform:scale(.92)}
 .btn-icon.call{color:var(--teal)}
 .btn-icon.call:hover{background:var(--teal-light);color:var(--teal-dark)}
 .btn-icon.email{color:var(--blue)}
@@ -67,35 +64,37 @@ input,textarea,select{font-family:inherit;letter-spacing:inherit}
 .btn-icon.del:hover{color:var(--rose);background:var(--rose-bg)}
 
 /* ── Tabs ── */
-.tabs-wrap{display:flex;align-items:end;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs-wrap{display:flex;align-items:end;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0}
 .tabs-wrap::-webkit-scrollbar{display:none}
-.tab{padding:9px 12px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:5px;user-select:none}
+.tab{padding:12px 14px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:5px;user-select:none;-webkit-tap-highlight-color:transparent}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600}
-.tab .ct{font-size:10px;font-weight:600;color:var(--text3);background:var(--bg);padding:0 5px;border-radius:3px;line-height:18px}
+.tab .ct{font-size:11px;font-weight:600;color:var(--text3);background:var(--bg);padding:1px 6px;border-radius:4px;line-height:18px}
 .tab.active .ct{background:var(--teal-light);color:var(--teal)}
 
 /* ── Stats strip ── */
-.stats-strip{background:var(--white);border-bottom:1px solid var(--border-light);padding:0 20px}
-.stats-inner{max-width:1440px;margin:0 auto;display:flex;gap:0;overflow-x:auto}
-.stat{padding:10px 18px 10px 0;border-right:1px solid var(--border-light);display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.stats-strip{background:var(--white);border-bottom:1px solid var(--border-light);padding:0 16px}
+.stats-inner{max-width:1400px;margin:0 auto;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.stats-inner::-webkit-scrollbar{display:none}
+.stat{padding:12px 20px 12px 0;border-right:1px solid var(--border-light);display:flex;align-items:baseline;gap:6px;white-space:nowrap}
 .stat:last-child{border-right:none}
 .stat:first-child{padding-left:0}
-.stat .sv{font-size:18px;font-weight:700;letter-spacing:-.03em}
-.stat .sl{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+.stat .sv{font-size:20px;font-weight:700;letter-spacing:-.03em}
+.stat .sl{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
 .stat.teal .sv{color:var(--teal)}
 .stat.green .sv{color:var(--emerald)}
 .stat.amber .sv{color:var(--amber)}
 .stat.rose .sv{color:var(--rose)}
 
 /* ── Content ── */
-.content{max-width:1440px;margin:0 auto;padding:16px 20px 40px}
+.content{max-width:1400px;margin:0 auto;padding:16px 16px 40px}
 
 /* ── Table ── */
-.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden}
-table{width:100%;border-collapse:collapse;font-size:12px}
-thead th{text-align:left;padding:8px 12px;background:var(--bg);color:var(--text2);font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1}
-tbody td{padding:7px 12px;border-top:1px solid var(--border-light);vertical-align:middle}
+.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
+thead th{text-align:left;padding:10px 14px;background:var(--bg);color:var(--text2);font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1}
+tbody td{padding:10px 14px;border-top:1px solid var(--border-light);vertical-align:middle}
 tbody tr{position:relative;transition:background .1s}
 tbody tr:first-child td{border-top:none}
 tbody tr:hover{background:#F9FAFB}
@@ -107,11 +106,11 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 
 .contact-name{font-weight:600;color:var(--text);cursor:pointer;text-decoration:none;display:block;line-height:1.3}
 .contact-name:hover{color:var(--teal)}
-.contact-company{font-size:11px;color:var(--text2);line-height:1.3}
-.email-val{color:var(--blue);font-size:11px}
+.contact-company{font-size:12px;color:var(--text2);line-height:1.3}
+.email-val{color:var(--blue);font-size:12px;word-break:break-all}
 .phone-val{font-variant-numeric:tabular-nums}
 .calls-num{font-weight:700;font-variant-numeric:tabular-nums;text-align:center;display:block;color:var(--text)}
-.status-pill{padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;display:inline-block;letter-spacing:.02em;text-transform:uppercase}
+.status-pill{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;display:inline-block;letter-spacing:.02em;text-transform:uppercase}
 .status-not-called{background:var(--violet-bg);color:var(--violet)}
 .status-spoken{background:var(--blue-bg);color:var(--blue)}
 .status-didnt-answer{background:var(--amber-bg);color:var(--amber)}
@@ -120,57 +119,96 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 .actions-cell{display:flex;gap:2px;align-items:center}
 
 /* ── Modal ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.25);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:100}
 .modal-overlay.show{display:flex}
-.modal{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:24px;width:92%;max-width:480px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 48px rgba(0,0,0,.08)}
-.modal h3{margin-bottom:16px;font-size:16px;font-weight:700;letter-spacing:-.02em}
-.form-group{margin-bottom:10px}
-.form-group label{display:block;font-size:10px;color:var(--text2);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:7px 10px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;transition:.15s}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.08)}
-.form-group textarea{height:72px;resize:vertical;line-height:1.5}
-.modal-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border-light)}
+.modal{background:var(--white);border-radius:16px 16px 0 0;padding:24px 20px calc(24px + var(--safe-b));width:100%;max-width:520px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -8px 40px rgba(0,0,0,.12)}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
+.modal h3{margin-bottom:16px;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:16px;transition:.15s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
+.form-group textarea{height:80px;resize:vertical;line-height:1.5}
+.modal-actions{display:flex;gap:8px;justify-content:stretch;margin-top:20px;padding-top:16px;border-top:1px solid var(--border-light)}
+.modal-actions .btn{flex:1;text-align:center;padding:12px 16px;font-size:14px}
 
-.import-zone{border:2px dashed var(--border);border-radius:8px;padding:28px;text-align:center;color:var(--text2);cursor:pointer;transition:.2s}
-.import-zone:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+.import-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;color:var(--text2);cursor:pointer;transition:.2s}
+.import-zone:hover,.import-zone:active{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
 .import-zone input{display:none}
 
-.call-history{margin-top:14px;padding:10px;background:var(--bg);border-radius:var(--radius)}
-.call-history h4{font-size:10px;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
-.call-entry{font-size:11px;padding:5px 0;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.call-history{margin-top:14px;padding:12px;background:var(--bg);border-radius:var(--radius)}
+.call-history h4{font-size:11px;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.call-entry{font-size:12px;padding:6px 0;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;gap:8px}
 .call-entry:first-of-type{border-top:none}
 
-.template-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:.15s}
-.template-card:hover{border-color:var(--teal)}
+.template-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent}
+.template-card:hover,.template-card:active{border-color:var(--teal)}
 .template-card.selected{border-color:var(--teal);background:var(--teal-light)}
-.template-card h4{font-size:12px;font-weight:600}
-.template-card p{font-size:11px;color:var(--text2)}
+.template-card h4{font-size:13px;font-weight:600}
+.template-card p{font-size:12px;color:var(--text2)}
 
-.section{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:10px}
-.section h3{font-size:14px;font-weight:700;margin-bottom:10px;letter-spacing:-.02em}
+.section{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px}
+.section h3{font-size:15px;font-weight:700;margin-bottom:10px;letter-spacing:-.02em}
 
 /* ── Toast ── */
-.toast{position:fixed;bottom:20px;right:20px;padding:10px 16px;border-radius:var(--radius);font-size:12px;font-weight:500;z-index:200;animation:toastIn .3s;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.toast{position:fixed;bottom:calc(20px + var(--safe-b));left:16px;right:16px;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:200;animation:toastIn .3s;box-shadow:0 8px 24px rgba(0,0,0,.12);text-align:center}
 .toast.success{background:var(--emerald);color:#fff}
 .toast.error{background:var(--rose);color:#fff}
 @keyframes toastIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* ── Booked flash ── */
 @keyframes bookedFlash{0%{background:var(--emerald-bg)}100%{background:transparent}}
 .flash-booked{animation:bookedFlash .8s ease-out}
 
-.empty-state{text-align:center;color:var(--text3);padding:60px 20px;font-size:13px}
-.empty-state strong{display:block;font-size:15px;color:var(--text2);margin-bottom:4px}
+.empty-state{text-align:center;color:var(--text3);padding:80px 20px;font-size:14px}
+.empty-state strong{display:block;font-size:16px;color:var(--text2);margin-bottom:6px}
 
-/* ── Responsive ── */
+/* ── Mobile cards ── */
+.mobile-cards{display:none}
+.lead-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;position:relative;-webkit-tap-highlight-color:transparent}
+.lead-card .lc-stripe{position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:2px}
+.lead-card .lc-stripe.s-booked{background:var(--emerald)}
+.lead-card .lc-stripe.s-not-interested{background:var(--rose)}
+.lead-card .lc-stripe.s-spoken{background:var(--blue)}
+.lead-card .lc-stripe.s-didnt-answer{background:var(--amber)}
+.lead-card .lc-stripe.s-not-called{background:var(--violet)}
+.lead-card .lc-top{display:flex;justify-content:space-between;align-items:start;margin-bottom:6px}
+.lead-card .lc-name{font-weight:600;font-size:15px;color:var(--text);cursor:pointer}
+.lead-card .lc-company{font-size:12px;color:var(--text2)}
+.lead-card .lc-details{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--text2);margin:8px 0}
+.lead-card .lc-details span{display:flex;align-items:center;gap:4px}
+.lead-card .lc-bottom{display:flex;gap:6px;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-light)}
+.lead-card .lc-meta{display:flex;gap:8px;align-items:center}
+.lead-card .lc-actions{display:flex;gap:4px}
+
+/* ── Desktop ── */
+@media(min-width:769px){
+  .modal-overlay.show{align-items:center}
+  .modal{border-radius:12px;padding:28px;max-width:520px}
+  .modal-handle{display:none}
+  .modal-actions{justify-content:flex-end}
+  .modal-actions .btn{flex:none}
+  .toast{left:auto;right:20px;max-width:360px}
+}
+
+/* ── Mobile ── */
 @media(max-width:768px){
-  .header-top{flex-wrap:wrap;height:auto;padding:10px 0}
-  .search-input{width:100%}
-  .search-input:focus{width:100%}
-  .stats-inner{gap:0}
-  .stat{padding:8px 12px 8px 0}
-  table{font-size:11px}
-  thead th,tbody td{padding:6px 8px}
+  .header-inner{padding:0 12px}
+  .header-top{height:50px;gap:8px}
+  .logo img{height:30px}
+  .header-actions .desktop-only{display:none}
+  .search-input{width:140px;font-size:14px;padding:8px 10px 8px 30px}
+  .search-input:focus{width:160px}
+  .tabs-wrap{padding:0 4px}
+  .tab{padding:10px 10px;font-size:12px}
+  .stats-strip{padding:0 12px}
+  .stat{padding:10px 14px 10px 0}
+  .stat .sv{font-size:18px}
+  .content{padding:12px 12px 40px}
+  .table-wrap{display:none}
+  .mobile-cards{display:block}
+  .section{padding:16px}
+  .btn{padding:10px 16px;font-size:14px}
+  .btn-sm{padding:6px 12px;font-size:12px}
 }
 </style>
 </head>
@@ -187,8 +225,8 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input type="text" class="search-input" id="search" placeholder="Search name or company...">
         </div>
-        <button class="btn" onclick="showImportModal()">Import CSV</button>
-        <button class="btn" onclick="exportLeads()">Export</button>
+        <button class="btn desktop-only" onclick="showImportModal()">Import CSV</button>
+        <button class="btn desktop-only" onclick="exportLeads()">Export</button>
         <button class="btn btn-primary" onclick="showAddLeadModal()">+ Add Lead</button>
       </div>
     </div>
@@ -217,7 +255,7 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 <!-- Import Modal -->
 <div class="modal-overlay" id="import-modal">
   <div class="modal">
-    <h3>Import leads</h3>
+    <div class="modal-handle"></div><h3>Import leads</h3>
     <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Upload a CSV with columns for name, company, phone, email, position. Headers are auto-matched.</p>
     <div class="import-zone" onclick="document.getElementById('csv-file').click()">
       <input type="file" id="csv-file" accept=".csv" onchange="handleCSV(event)">
@@ -235,7 +273,7 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 <!-- Call Outcome Modal -->
 <div class="modal-overlay" id="call-modal">
   <div class="modal">
-    <h3>Log call — <span id="call-lead-name"></span></h3>
+    <div class="modal-handle"></div><h3>Log call — <span id="call-lead-name"></span></h3>
     <p style="font-size:12px;color:var(--text2);margin-bottom:12px" id="call-lead-info"></p>
     <div class="form-group">
       <label>Outcome</label>
@@ -260,7 +298,7 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 <!-- Add/Edit Lead Modal -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal">
-    <h3 id="lead-modal-title">Add lead</h3>
+    <div class="modal-handle"></div><h3 id="lead-modal-title">Add lead</h3>
     <div class="form-group"><label>Contact name (ask for)</label><input id="lead-name" placeholder="John Smith"></div>
     <div class="form-group"><label>Company</label><input id="lead-company" placeholder="ABC Corp"></div>
     <div class="form-group"><label>Phone</label><input id="lead-phone" placeholder="04XX XXX XXX"></div>
@@ -278,7 +316,7 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 <!-- Email Modal -->
 <div class="modal-overlay" id="email-modal">
   <div class="modal">
-    <h3>Send email — <span id="email-lead-name"></span></h3>
+    <div class="modal-handle"></div><h3>Send email — <span id="email-lead-name"></span></h3>
     <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Pick a template. It auto-fills their details.</p>
     <div id="email-template-list"></div>
     <div class="form-group" style="margin-top:10px">
@@ -299,7 +337,7 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 <!-- Lead Detail Modal -->
 <div class="modal-overlay" id="detail-modal">
   <div class="modal" style="max-width:560px">
-    <div id="detail-content"></div>
+    <div class="modal-handle"></div><div id="detail-content"></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('detail-modal')">Close</button>
     </div>
@@ -309,7 +347,7 @@ tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
 <!-- Template Edit Modal -->
 <div class="modal-overlay" id="template-modal">
   <div class="modal">
-    <h3 id="template-modal-title">Add template</h3>
+    <div class="modal-handle"></div><h3 id="template-modal-title">Add template</h3>
     <div class="form-group"><label>Name</label><input id="tpl-name" placeholder="e.g. Introduction Email"></div>
     <div class="form-group"><label>Subject</label><input id="tpl-subject" placeholder="Use {{name}}, {{company}} as placeholders"></div>
     <div class="form-group"><label>Body</label><textarea id="tpl-body" style="height:180px" placeholder="Hi {{name}},&#10;&#10;Use {{name}}, {{company}}, {{email}} as placeholders..."></textarea></div>
@@ -443,26 +481,53 @@ function renderTable(el) {
     el.innerHTML = '<div class="empty-state"><strong>No leads here</strong>Import a CSV or add leads to get started.</div>';
     return;
   }
-  el.innerHTML = `<div class="table-wrap"><table>
-    <thead><tr><th>Contact / Company</th><th>Phone</th><th>Email</th><th>Position</th><th style="text-align:center;width:50px">Calls</th><th>Status</th><th style="width:110px">Actions</th></tr></thead>
-    <tbody>${data.map(l => `<tr class="${stripeClass(l.lastOutcome)}">
-      <td>
-        <a class="contact-name" onclick="showDetail('${l.id}')">${esc(l.name)}</a>
-        <span class="contact-company">${esc(l.company)}</span>
-      </td>
-      <td class="phone-val">${esc(l.phone)}</td>
-      <td class="email-val">${esc(l.email)}</td>
-      <td style="color:var(--text2)">${esc(l.position||'')}</td>
-      <td style="text-align:center"><span class="calls-num">${l.calls?l.calls.length:0}</span></td>
-      <td><span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span></td>
-      <td><div class="actions-cell">
-        <button class="btn-icon call" onclick="logCall('${l.id}')" title="Log call">${icons.phone}</button>
-        <button class="btn-icon email" onclick="openEmailModal('${l.id}')" title="Send email">${icons.mail}</button>
-        <button class="btn-icon" onclick="editLead('${l.id}')" title="Edit">${icons.edit}</button>
-        <button class="btn-icon del" onclick="deleteLead('${l.id}')" title="Delete">${icons.trash}</button>
-      </div></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
+  el.innerHTML = `
+    <div class="table-wrap"><div class="table-scroll"><table>
+      <thead><tr><th>Contact / Company</th><th>Phone</th><th>Email</th><th>Position</th><th style="text-align:center;width:50px">Calls</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
+      <tbody>${data.map(l => `<tr class="${stripeClass(l.lastOutcome)}">
+        <td>
+          <a class="contact-name" onclick="showDetail('${l.id}')">${esc(l.name)}</a>
+          <span class="contact-company">${esc(l.company)}</span>
+        </td>
+        <td class="phone-val">${esc(l.phone)}</td>
+        <td class="email-val">${esc(l.email)}</td>
+        <td style="color:var(--text2)">${esc(l.position||'')}</td>
+        <td style="text-align:center"><span class="calls-num">${l.calls?l.calls.length:0}</span></td>
+        <td><span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span></td>
+        <td><div class="actions-cell">
+          <button class="btn-icon call" onclick="logCall('${l.id}')" title="Log call">${icons.phone}</button>
+          <button class="btn-icon email" onclick="openEmailModal('${l.id}')" title="Send email">${icons.mail}</button>
+          <button class="btn-icon" onclick="editLead('${l.id}')" title="Edit">${icons.edit}</button>
+          <button class="btn-icon del" onclick="deleteLead('${l.id}')" title="Delete">${icons.trash}</button>
+        </div></td>
+      </tr>`).join('')}</tbody>
+    </table></div></div>
+    <div class="mobile-cards">${data.map(l => `
+      <div class="lead-card" onclick="showDetail('${l.id}')">
+        <div class="lc-stripe s-${l.lastOutcome||'not-called'}"></div>
+        <div class="lc-top">
+          <div>
+            <div class="lc-name">${esc(l.name)}</div>
+            <div class="lc-company">${esc(l.company)}</div>
+          </div>
+          <span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span>
+        </div>
+        <div class="lc-details">
+          <span>${icons.phone} ${esc(l.phone)}</span>
+          <span>${icons.mail} ${esc(l.email)}</span>
+        </div>
+        <div class="lc-bottom">
+          <div class="lc-meta">
+            <span class="status-pill" style="background:var(--bg);color:var(--text)">${l.calls?l.calls.length:0} calls</span>
+            ${l.position?'<span style="font-size:12px;color:var(--text3)">'+esc(l.position)+'</span>':''}
+          </div>
+          <div class="lc-actions" onclick="event.stopPropagation()">
+            <button class="btn-icon call" onclick="logCall('${l.id}')">${icons.phone}</button>
+            <button class="btn-icon email" onclick="openEmailModal('${l.id}')">${icons.mail}</button>
+          </div>
+        </div>
+      </div>
+    `).join('')}</div>`;
 }
 
 function renderTemplates(el) {
