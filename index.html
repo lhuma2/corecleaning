@@ -311,6 +311,14 @@ a{-webkit-tap-highlight-color:transparent}
   </div>
 </div></div>
 
+<!-- Full page drop overlay -->
+<div id="page-drop" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(13,148,136,.12);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:center;justify-content:center">
+  <div style="background:var(--white);border:3px dashed var(--teal);border-radius:20px;padding:60px 40px;text-align:center;max-width:400px">
+    <p style="font-size:20px;font-weight:700;color:var(--teal);margin-bottom:4px">Drop your CSV</p>
+    <p style="font-size:14px;color:var(--text2)">Release to import leads</p>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://cacqtgilqskwxxnxqgwv.supabase.co';
@@ -543,6 +551,7 @@ function handleFile(file){
         });
       }
     }
+    document.getElementById('import-modal').classList.add('show');
     const p=document.getElementById('import-preview');p.style.display='block';
     p.innerHTML=`<p style="font-size:13px;margin-bottom:8px;color:var(--emerald);font-weight:600">Found ${pendingCSVLeads.length} leads</p>`;
     document.getElementById('import-confirm-btn').style.display='block';
@@ -666,6 +675,19 @@ function saveResendSettings(){settings.resendKey=document.getElementById('resend
 function exportLeads(){const h=['Name','Company','Phone','Email','Position','Address','Notes','Status','Calls'];const rows=leads.map(l=>[l.name,l.company,l.phone,l.email,l.position||'',l.address||'',l.notes||'',outcomeLabel(l.lastOutcome||'not-called'),l.calls?l.calls.length:0]);const csv=[h,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='leads_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
 
 async function clearAllLeads(){if(!confirm('Delete ALL leads? Cannot be undone.'))return;await sb.from('calls').delete().neq('id','00000000-0000-0000-0000-000000000000');await sb.from('leads').delete().neq('id','00000000-0000-0000-0000-000000000000');toast('All leads deleted');await loadData()}
+
+// Page-level drag and drop
+let dragCounter=0;
+const pageDrop=document.getElementById('page-drop');
+document.addEventListener('dragenter',e=>{e.preventDefault();dragCounter++;pageDrop.style.display='flex'});
+document.addEventListener('dragleave',e=>{e.preventDefault();dragCounter--;if(dragCounter<=0){dragCounter=0;pageDrop.style.display='none'}});
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>{
+  e.preventDefault();dragCounter=0;pageDrop.style.display='none';
+  const file=e.dataTransfer.files[0];
+  if(file&&(file.name.endsWith('.csv')||file.type==='text/csv')){handleFile(file)}
+  else if(file){toast('Please drop a CSV file','error')}
+});
 
 loadData();
 </script>
