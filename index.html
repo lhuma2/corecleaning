@@ -628,7 +628,7 @@ function openEmailModal(id){const l=leads.find(x=>x.id===id);if(!l)return;emaili
 
 function renderEmailTpls(){document.getElementById('email-template-list').innerHTML=templates.map(t=>`<div class="template-card ${t.id===selectedTemplateId?'selected':''}" onclick="selectedTemplateId='${t.id}';renderEmailTpls();updateEmailPreview()"><h4>${esc(t.name)}</h4><p>${esc(t.subject).slice(0,60)}</p></div>`).join('')}
 
-function updateEmailPreview(){const tpl=templates.find(t=>t.id===selectedTemplateId),l=leads.find(x=>x.id===emailingLeadId);if(!tpl||!l)return;const r=s=>s.replace(/\{\{name\}\}/g,l.name).replace(/\{\{company\}\}/g,l.company).replace(/\{\{email\}\}/g,l.email);document.getElementById('email-subject-preview').value=r(tpl.subject);document.getElementById('email-body-preview').value=r(tpl.body)}
+function updateEmailPreview(){const tpl=templates.find(t=>t.id===selectedTemplateId),l=leads.find(x=>x.id===emailingLeadId);if(!tpl||!l)return;const r=s=>s.replace(/\{\{firstname\}\}/g,(l.name||'').split(' ')[0]).replace(/\{\{name\}\}/g,l.name).replace(/\{\{company\}\}/g,l.company).replace(/\{\{email\}\}/g,l.email);document.getElementById('email-subject-preview').value=r(tpl.subject);document.getElementById('email-body-preview').value=r(tpl.body)}
 
 async function sendEmail(){
   const l=leads.find(x=>x.id===emailingLeadId);if(!l||!l.email){toast('No email address','error');return}
@@ -650,7 +650,7 @@ function openSmsModal(id){
   const tplsToShow=smsTpls.length?smsTpls:templates;
   list.innerHTML=tplsToShow.map(t=>`<div class="template-card ${t.id===selectedTemplateId?'selected':''}" onclick="selectedTemplateId='${t.id}';openSmsModal('${id}')"><h4>${esc(t.name)}</h4></div>`).join('');
   const tpl=templates.find(t=>t.id===selectedTemplateId);
-  if(tpl){const rep=s=>s.replace(/\{\{name\}\}/g,l.name).replace(/\{\{company\}\}/g,l.company).replace(/\{\{email\}\}/g,l.email);document.getElementById('sms-body-preview').value=rep(tpl.body)}
+  if(tpl){const rep=s=>s.replace(/\{\{firstname\}\}/g,(l.name||'').split(' ')[0]).replace(/\{\{name\}\}/g,l.name).replace(/\{\{company\}\}/g,l.company).replace(/\{\{email\}\}/g,l.email);document.getElementById('sms-body-preview').value=rep(tpl.body)}
   document.getElementById('sms-modal').classList.add('show');
 }
 
