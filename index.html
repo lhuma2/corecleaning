@@ -527,20 +527,22 @@ function handleFile(file){
     if(lines.length<1){toast('CSV is empty','error');return}
     const first=parseCSV(lines[0]);
     const firstLower=first.map(h=>h.toLowerCase().trim());
-    const hasHeaders=firstLower.some(h=>['name','company','email','phone','first','contact'].some(k=>h.includes(k)));
-    const startRow=hasHeaders?1:0;
+    // Check if first row looks like headers (contains words like "name","company" etc, not actual data)
+    const headerWords=['first name','last name','company name','email address','phone number','contact name'];
+    const hasHeaders=firstLower.some(h=>['name','company','email','phone','contact'].some(k=>h===k))||firstLower.some(h=>headerWords.some(k=>h===k));
     pendingCSVLeads=[];
     if(hasHeaders){
       const cm=mapCols(firstLower);
-      for(let i=startRow;i<lines.length;i++){
+      for(let i=1;i<lines.length;i++){
         const v=parseCSV(lines[i]);if(v.every(x=>!x.trim()))continue;
         pendingCSVLeads.push({name:v[cm.name]||'',company:v[cm.company]||'',phone:v[cm.phone]||'',email:v[cm.email]||'',position:v[cm.position]||'',address:v[cm.address]||'',notes:v[cm.notes]||'',industry:v[cm.industry]||''});
       }
     } else {
+      // Headerless CSV: FirstName,LastName,Phone,Company,Position,Email,Industry,Website,Address
       for(let i=0;i<lines.length;i++){
         const v=parseCSV(lines[i]);if(v.every(x=>!x.trim()))continue;
         pendingCSVLeads.push({
-          name:((v[0]||'')+ ' '+(v[1]||'')).trim(),
+          name:((v[0]||'')+' '+(v[1]||'')).trim(),
           phone:v[2]||'',
           company:v[3]||'',
           position:v[4]||'',
