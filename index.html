@@ -299,6 +299,18 @@ a{-webkit-tap-highlight-color:transparent}
   </div>
 </div></div>
 
+<!-- SMS Modal -->
+<div class="modal-overlay" id="sms-modal"><div class="modal">
+  <div class="modal-handle"></div><h3>Send SMS — <span id="sms-lead-name"></span></h3>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Pick a template. Opens your messaging app.</p>
+  <div id="sms-template-list"></div>
+  <div class="form-group" style="margin-top:10px"><label>Message</label><textarea id="sms-body-preview" style="height:100px"></textarea></div>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('sms-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="sendSms()">Open Messages</button>
+  </div>
+</div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://cacqtgilqskwxxnxqgwv.supabase.co';
@@ -336,6 +348,7 @@ const ic = {
   copy:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
   trash:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>',
   edit:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>',
+  sms:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
 };
 
 // Filter pills
@@ -443,6 +456,7 @@ function renderCards(el){
         <button class="btn-call" onclick="logCall('${l.id}')">${ic.phone} Call ${esc(firstName(l.name))}</button>
         <button class="btn-action" onclick="logCall('${l.id}')" title="Log call">${ic.log} Log</button>
         <button class="btn-action" onclick="openEmailModal('${l.id}')" title="Send email">${ic.mail}</button>
+        <button class="btn-action" onclick="openSmsModal('${l.id}')" title="Send SMS">${ic.sms}</button>
         <button class="btn-action" onclick="editLead('${l.id}')" title="Edit">${ic.edit}</button>
         <button class="btn-action danger" onclick="deleteLead('${l.id}')" title="Delete">${ic.trash}</button>
       </div>
@@ -592,7 +606,8 @@ function showDetail(id){
     </div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="closeModal('detail-modal');logCall('${l.id}')">Log call</button>
-      <button class="btn" onclick="closeModal('detail-modal');openEmailModal('${l.id}')">Send email</button>
+      <button class="btn" onclick="closeModal('detail-modal');openEmailModal('${l.id}')">Email</button>
+      <button class="btn" onclick="closeModal('detail-modal');openSmsModal('${l.id}')">SMS</button>
       <button class="btn" onclick="closeModal('detail-modal');editLead('${l.id}')">Edit</button>
     </div>`;
   document.getElementById('detail-modal').classList.add('show');
@@ -611,6 +626,31 @@ async function sendEmail(){
   window.open(mailto,'_blank');
   await sb.from('calls').insert([{lead_id:l.id,outcome:'email-sent',notes:'Sent: '+subject}]);
   closeModal('email-modal');toast('Opening email app...');await loadData();
+}
+
+let smsingLeadId=null;
+function openSmsModal(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;
+  smsingLeadId=id;
+  document.getElementById('sms-lead-name').textContent=l.name;
+  const smsTpls=templates.filter(t=>t.name.toLowerCase().includes('sms'));
+  selectedTemplateId=smsTpls.length?smsTpls[0].id:(templates.length?templates[0].id:null);
+  const list=document.getElementById('sms-template-list');
+  const tplsToShow=smsTpls.length?smsTpls:templates;
+  list.innerHTML=tplsToShow.map(t=>`<div class="template-card ${t.id===selectedTemplateId?'selected':''}" onclick="selectedTemplateId='${t.id}';openSmsModal('${id}')"><h4>${esc(t.name)}</h4></div>`).join('');
+  const tpl=templates.find(t=>t.id===selectedTemplateId);
+  if(tpl){const rep=s=>s.replace(/\{\{name\}\}/g,l.name).replace(/\{\{company\}\}/g,l.company).replace(/\{\{email\}\}/g,l.email);document.getElementById('sms-body-preview').value=rep(tpl.body)}
+  document.getElementById('sms-modal').classList.add('show');
+}
+
+function sendSms(){
+  const l=leads.find(x=>x.id===smsingLeadId);if(!l||!l.phone){toast('No phone number','error');return}
+  const body=document.getElementById('sms-body-preview').value;
+  const phone=l.phone.replace(/\s/g,'');
+  const smsUrl=`sms:${phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?'}body=${encodeURIComponent(body)}`;
+  window.open(smsUrl,'_self');
+  sb.from('calls').insert([{lead_id:l.id,outcome:'sms-sent',notes:'SMS: '+body.slice(0,50)}]);
+  closeModal('sms-modal');toast('Opening messages...');
 }
 
 function showAddTemplateModal(){editingTemplateId=null;document.getElementById('template-modal-title').textContent='Add template';['tpl-name','tpl-subject','tpl-body'].forEach(f=>document.getElementById(f).value='');document.getElementById('template-modal').classList.add('show')}
