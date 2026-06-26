@@ -632,11 +632,15 @@ function updateEmailPreview(){const tpl=templates.find(t=>t.id===selectedTemplat
 
 async function sendEmail(){
   const l=leads.find(x=>x.id===emailingLeadId);if(!l||!l.email){toast('No email address','error');return}
+  if(!settings.resendKey){toast('Set Resend API key in Settings','error');return}
   const subject=document.getElementById('email-subject-preview').value,body=document.getElementById('email-body-preview').value;
-  const mailto=`mailto:${encodeURIComponent(l.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(mailto,'_blank');
-  await sb.from('calls').insert([{lead_id:l.id,outcome:'email-sent',notes:'Sent: '+subject}]);
-  closeModal('email-modal');toast('Opening email app...');await loadData();
+  try{
+    const res=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'Authorization':'Bearer '+settings.resendKey,'Content-Type':'application/json'},body:JSON.stringify({from:'Core Cleaning <admin@corecleaning.services>',to:[l.email],subject,text:body})});
+    const data=await res.json();
+    if(res.ok){toast('Email sent to '+l.email);await sb.from('calls').insert([{lead_id:l.id,outcome:'email-sent',notes:'Sent: '+subject}])}
+    else{toast('Error: '+(data.message||'Failed to send'),'error')}
+  }catch(err){toast('Network error: '+err.message,'error')}
+  closeModal('email-modal');await loadData();
 }
 
 let smsingLeadId=null;
