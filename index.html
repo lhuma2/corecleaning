@@ -5,358 +5,299 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#F7F8FA">
 <link rel="apple-touch-icon" href="logo-icon.png">
-<title>Core Cleaning — Cold Calls</title>
 <link rel="icon" type="image/png" href="logo-icon.png">
+<title>Core Cleaning — Cold Calls</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#F4F5F7;--white:#FFFFFF;--border:#E2E4EA;--border-light:#EDEEF2;
+  --bg:#F3F4F6;--white:#FFFFFF;--border:#E5E7EB;--border-light:#F3F4F6;
   --text:#111827;--text2:#6B7280;--text3:#9CA3AF;
+  --navy:#0F172A;--navy2:#1E293B;
   --teal:#0D9488;--teal-dark:#0F766E;--teal-light:#F0FDFA;
   --emerald:#059669;--emerald-bg:#ECFDF5;
   --rose:#E11D48;--rose-bg:#FFF1F2;
   --amber:#B45309;--amber-bg:#FFFBEB;
   --blue:#2563EB;--blue-bg:#EFF6FF;
   --violet:#7C3AED;--violet-bg:#F5F3FF;
-  --radius:8px;
+  --radius:10px;
   --safe-b:env(safe-area-inset-bottom,0px);
 }
 html{-webkit-text-size-adjust:100%}
-body{font-family:'Outfit',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:-webkit-fill-available;font-size:14px;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;padding-bottom:var(--safe-b)}
-button{cursor:pointer;font-family:inherit;letter-spacing:inherit;-webkit-tap-highlight-color:transparent}
-input,textarea,select{font-family:inherit;letter-spacing:inherit;font-size:16px;-webkit-appearance:none;appearance:none}
-::selection{background:var(--teal);color:#fff}
+body{font-family:'Outfit',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;padding-bottom:var(--safe-b)}
+button{cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent}
+input,textarea,select{font-family:inherit;font-size:16px;-webkit-appearance:none}
 a{-webkit-tap-highlight-color:transparent}
+::selection{background:var(--teal);color:#fff}
 
-/* ── Header ── */
-.header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
-.header-inner{max-width:1400px;margin:0 auto;padding:0 16px}
-.header-top{display:flex;align-items:center;height:56px;gap:12px}
-.logo{display:flex;align-items:center;flex-shrink:0}
-.logo img{height:36px;width:auto}
-.header-actions{display:flex;gap:8px;margin-left:auto;align-items:center}
+.page{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
 
-.search-wrap{position:relative}
-.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
-.search-input{padding:8px 12px 8px 32px;background:var(--bg);border:1px solid transparent;border-radius:var(--radius);color:var(--text);font-size:14px;width:220px;transition:.2s}
-.search-input:focus{outline:none;border-color:var(--teal);background:var(--white);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
-.search-input::placeholder{color:var(--text3)}
+/* ── Page header ── */
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.page-head-left h1{font-size:28px;font-weight:800;letter-spacing:-.03em;color:var(--text)}
+.page-head-left p{font-size:14px;color:var(--text3);margin-top:2px}
+.page-head-right{display:flex;gap:8px;align-items:center}
+.page-head-right img{height:36px}
 
-.btn{padding:8px 16px;border-radius:var(--radius);border:1px solid var(--border);font-size:13px;font-weight:500;transition:.15s;background:var(--white);color:var(--text);line-height:1.4;white-space:nowrap}
-.btn:hover{background:var(--bg);border-color:#d1d5db}
+/* ── Stats banner ── */
+.stats-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border-radius:14px;padding:24px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;color:#fff}
+.sb-item .sb-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.5);margin-bottom:4px}
+.sb-item .sb-val{font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.sb-item .sb-val span{font-size:16px;font-weight:400;color:rgba(255,255,255,.4)}
+
+/* ── Filter bar ── */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.pill{padding:8px 16px;border-radius:50px;border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--text2);background:var(--white);cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.pill:hover{border-color:#d1d5db;color:var(--text)}
+.pill:active{transform:scale(.96)}
+.pill.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pill .pc{font-weight:700}
+.pill-search{flex:1;min-width:140px;position:relative}
+.pill-search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.pill-search input{width:100%;padding:8px 14px 8px 36px;border-radius:50px;border:1px solid var(--border);font-size:14px;color:var(--text);background:var(--white);transition:.15s}
+.pill-search input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
+.pill-search input::placeholder{color:var(--text3)}
+.btn-import{padding:10px 20px;border-radius:50px;border:none;font-size:14px;font-weight:600;background:var(--navy);color:#fff;display:flex;align-items:center;gap:6px;transition:.15s}
+.btn-import:hover{background:var(--navy2)}
+.btn-import:active{transform:scale(.96)}
+
+/* ── Lead cards ── */
+.lead-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:12px;position:relative;transition:box-shadow .15s}
+.lead-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.lc-stripe{position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:0 2px 2px 0}
+.lc-stripe.s-booked{background:var(--emerald)}
+.lc-stripe.s-not-interested{background:var(--rose)}
+.lc-stripe.s-spoken{background:var(--blue)}
+.lc-stripe.s-didnt-answer{background:var(--amber)}
+.lc-stripe.s-not-called{background:var(--teal)}
+.lc-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:4px}
+.lc-company{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.02em}
+.lc-added{font-size:12px;color:var(--text3);margin-top:2px}
+.lc-badges{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.lc-badge{padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.lc-badge.calls{background:var(--bg);color:var(--text2)}
+.lc-badge.new{background:var(--teal-light);color:var(--teal);border:1px solid rgba(13,148,136,.2)}
+.lc-badge.spoken{background:var(--blue-bg);color:var(--blue)}
+.lc-badge.booked{background:var(--emerald-bg);color:var(--emerald)}
+.lc-badge.not-interested{background:var(--rose-bg);color:var(--rose)}
+.lc-badge.didnt-answer{background:var(--amber-bg);color:var(--amber)}
+
+.lc-info{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin:14px 0;font-size:13px;color:var(--text2)}
+.lc-info-row{display:flex;align-items:center;gap:8px}
+.lc-info-row svg{flex-shrink:0;color:var(--text3);width:16px;height:16px}
+.lc-info-row a{color:var(--text2);text-decoration:none}
+.lc-status{font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px;margin-top:2px}
+
+.lc-actions{display:flex;gap:8px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border-light)}
+.btn-call{flex:1;max-width:460px;padding:12px 20px;border-radius:10px;border:none;font-size:14px;font-weight:600;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.btn-call:hover{background:var(--navy2)}
+.btn-call:active{transform:scale(.98)}
+.btn-call svg{width:16px;height:16px}
+.btn-action{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--text2);transition:.15s}
+.btn-action:hover{background:var(--bg);color:var(--text)}
+.btn-action:active{transform:scale(.92)}
+.btn-action.danger:hover{color:var(--rose);background:var(--rose-bg);border-color:var(--rose)}
+
+/* ── Utility buttons ── */
+.btn{padding:10px 18px;border-radius:var(--radius);border:1px solid var(--border);font-size:14px;font-weight:500;background:var(--white);color:var(--text);transition:.15s}
+.btn:hover{background:var(--bg)}
 .btn:active{transform:scale(.97)}
 .btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
-.btn-primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+.btn-primary:hover{background:var(--teal-dark)}
 .btn-danger{color:var(--rose);border-color:var(--border)}
-.btn-danger:hover{background:var(--rose-bg);border-color:var(--rose)}
-.btn-sm{padding:5px 10px;font-size:12px}
-.btn-icon{padding:8px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius);border:1px solid transparent;background:none;color:var(--text2);transition:.15s;min-width:36px;min-height:36px}
-.btn-icon:hover{background:var(--bg);color:var(--text)}
-.btn-icon:active{transform:scale(.92)}
-.btn-icon.call{color:var(--teal)}
-.btn-icon.call:hover{background:var(--teal-light);color:var(--teal-dark)}
-.btn-icon.email{color:var(--blue)}
-.btn-icon.email:hover{background:var(--blue-bg)}
-.btn-icon.del{color:var(--text3)}
-.btn-icon.del:hover{color:var(--rose);background:var(--rose-bg)}
-
-/* ── Tabs ── */
-.tabs-wrap{display:flex;align-items:end;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0}
-.tabs-wrap::-webkit-scrollbar{display:none}
-.tab{padding:12px 14px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:5px;user-select:none;-webkit-tap-highlight-color:transparent}
-.tab:hover{color:var(--text)}
-.tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600}
-.tab .ct{font-size:11px;font-weight:600;color:var(--text3);background:var(--bg);padding:1px 6px;border-radius:4px;line-height:18px}
-.tab.active .ct{background:var(--teal-light);color:var(--teal)}
-
-/* ── Stats strip ── */
-.stats-strip{background:var(--white);border-bottom:1px solid var(--border-light);padding:0 16px}
-.stats-inner{max-width:1400px;margin:0 auto;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.stats-inner::-webkit-scrollbar{display:none}
-.stat{padding:12px 20px 12px 0;border-right:1px solid var(--border-light);display:flex;align-items:baseline;gap:6px;white-space:nowrap}
-.stat:last-child{border-right:none}
-.stat:first-child{padding-left:0}
-.stat .sv{font-size:20px;font-weight:700;letter-spacing:-.03em}
-.stat .sl{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
-.stat.teal .sv{color:var(--teal)}
-.stat.green .sv{color:var(--emerald)}
-.stat.amber .sv{color:var(--amber)}
-.stat.rose .sv{color:var(--rose)}
-
-/* ── Content ── */
-.content{max-width:1400px;margin:0 auto;padding:16px 16px 40px}
-
-/* ── Table ── */
-.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
-thead th{text-align:left;padding:10px 14px;background:var(--bg);color:var(--text2);font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1}
-tbody td{padding:10px 14px;border-top:1px solid var(--border-light);vertical-align:middle}
-tbody tr{position:relative;transition:background .1s}
-tbody tr:first-child td{border-top:none}
-tbody tr:hover{background:#F9FAFB}
-tbody tr.stripe-booked{box-shadow:inset 3px 0 0 var(--emerald)}
-tbody tr.stripe-not-interested{box-shadow:inset 3px 0 0 var(--rose)}
-tbody tr.stripe-spoken{box-shadow:inset 3px 0 0 var(--blue)}
-tbody tr.stripe-didnt-answer{box-shadow:inset 3px 0 0 var(--amber)}
-tbody tr.stripe-not-called{box-shadow:inset 3px 0 0 var(--violet)}
-
-.contact-name{font-weight:600;color:var(--text);cursor:pointer;text-decoration:none;display:block;line-height:1.3}
-.contact-name:hover{color:var(--teal)}
-.contact-company{font-size:12px;color:var(--text2);line-height:1.3}
-.email-val{color:var(--blue);font-size:12px;word-break:break-all}
-.phone-val{font-variant-numeric:tabular-nums}
-.calls-num{font-weight:700;font-variant-numeric:tabular-nums;text-align:center;display:block;color:var(--text)}
-.status-pill{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;display:inline-block;letter-spacing:.02em;text-transform:uppercase}
-.status-not-called{background:var(--violet-bg);color:var(--violet)}
-.status-spoken{background:var(--blue-bg);color:var(--blue)}
-.status-didnt-answer{background:var(--amber-bg);color:var(--amber)}
-.status-booked{background:var(--emerald-bg);color:var(--emerald)}
-.status-not-interested{background:var(--rose-bg);color:var(--rose)}
-.actions-cell{display:flex;gap:2px;align-items:center}
+.btn-danger:hover{background:var(--rose-bg)}
+.btn-sm{padding:6px 12px;font-size:12px}
 
 /* ── Modal ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:100}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center;z-index:100}
 .modal-overlay.show{display:flex}
-.modal{background:var(--white);border-radius:16px 16px 0 0;padding:24px 20px calc(24px + var(--safe-b));width:100%;max-width:520px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -8px 40px rgba(0,0,0,.12)}
-.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
-.modal h3{margin-bottom:16px;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.modal{background:var(--white);border-radius:16px 16px 0 0;padding:20px 20px calc(20px + var(--safe-b));width:100%;max-width:520px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -8px 40px rgba(0,0,0,.15)}
+.modal-handle{width:36px;height:4px;background:#D1D5DB;border-radius:2px;margin:0 auto 16px}
+.modal h3{margin-bottom:16px;font-size:18px;font-weight:700}
 .form-group{margin-bottom:12px}
 .form-group label{display:block;font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:16px;transition:.15s}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);transition:.15s}
 .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.1)}
 .form-group textarea{height:80px;resize:vertical;line-height:1.5}
-.modal-actions{display:flex;gap:8px;justify-content:stretch;margin-top:20px;padding-top:16px;border-top:1px solid var(--border-light)}
-.modal-actions .btn{flex:1;text-align:center;padding:12px 16px;font-size:14px}
+.modal-actions{display:flex;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border-light)}
+.modal-actions .btn{flex:1;text-align:center;padding:12px}
 
-.import-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;color:var(--text2);cursor:pointer;transition:.2s}
+.import-zone{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;color:var(--text2);cursor:pointer;transition:.2s}
 .import-zone:hover,.import-zone:active{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
 .import-zone input{display:none}
 
 .call-history{margin-top:14px;padding:12px;background:var(--bg);border-radius:var(--radius)}
 .call-history h4{font-size:11px;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
-.call-entry{font-size:12px;padding:6px 0;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.call-entry{font-size:12px;padding:6px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px}
 .call-entry:first-of-type{border-top:none}
 
-.template-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent}
-.template-card:hover,.template-card:active{border-color:var(--teal)}
+.template-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:8px;cursor:pointer;transition:.15s}
+.template-card:hover{border-color:var(--teal)}
 .template-card.selected{border-color:var(--teal);background:var(--teal-light)}
 .template-card h4{font-size:13px;font-weight:600}
 .template-card p{font-size:12px;color:var(--text2)}
 
-.section{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px}
-.section h3{font-size:15px;font-weight:700;margin-bottom:10px;letter-spacing:-.02em}
+.section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
+.section h3{font-size:15px;font-weight:700;margin-bottom:10px}
 
-/* ── Toast ── */
-.toast{position:fixed;bottom:calc(20px + var(--safe-b));left:16px;right:16px;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:200;animation:toastIn .3s;box-shadow:0 8px 24px rgba(0,0,0,.12);text-align:center}
+.status-pill{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;display:inline-block;text-transform:uppercase}
+.status-not-called{background:var(--violet-bg);color:var(--violet)}
+.status-spoken{background:var(--blue-bg);color:var(--blue)}
+.status-didnt-answer{background:var(--amber-bg);color:var(--amber)}
+.status-booked{background:var(--emerald-bg);color:var(--emerald)}
+.status-not-interested{background:var(--rose-bg);color:var(--rose)}
+
+.toast{position:fixed;bottom:calc(20px + var(--safe-b));left:16px;right:16px;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:500;z-index:200;animation:toastIn .3s;box-shadow:0 8px 24px rgba(0,0,0,.12);text-align:center;max-width:400px;margin:0 auto}
 .toast.success{background:var(--emerald);color:#fff}
 .toast.error{background:var(--rose);color:#fff}
 @keyframes toastIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-@keyframes bookedFlash{0%{background:var(--emerald-bg)}100%{background:transparent}}
-.flash-booked{animation:bookedFlash .8s ease-out}
+.empty-state{text-align:center;color:var(--text3);padding:60px 20px}
+.empty-state strong{display:block;font-size:18px;color:var(--text2);margin-bottom:6px}
 
-.empty-state{text-align:center;color:var(--text3);padding:80px 20px;font-size:14px}
-.empty-state strong{display:block;font-size:16px;color:var(--text2);margin-bottom:6px}
-
-/* ── Mobile cards ── */
-.mobile-cards{display:none}
-.lead-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:8px;position:relative;-webkit-tap-highlight-color:transparent}
-.lead-card .lc-stripe{position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:2px}
-.lead-card .lc-stripe.s-booked{background:var(--emerald)}
-.lead-card .lc-stripe.s-not-interested{background:var(--rose)}
-.lead-card .lc-stripe.s-spoken{background:var(--blue)}
-.lead-card .lc-stripe.s-didnt-answer{background:var(--amber)}
-.lead-card .lc-stripe.s-not-called{background:var(--violet)}
-.lead-card .lc-top{display:flex;justify-content:space-between;align-items:start;margin-bottom:6px}
-.lead-card .lc-name{font-weight:600;font-size:15px;color:var(--text);cursor:pointer}
-.lead-card .lc-company{font-size:12px;color:var(--text2)}
-.lead-card .lc-details{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--text2);margin:8px 0}
-.lead-card .lc-details span{display:flex;align-items:center;gap:4px}
-.lead-card .lc-bottom{display:flex;gap:6px;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-light)}
-.lead-card .lc-meta{display:flex;gap:8px;align-items:center}
-.lead-card .lc-actions{display:flex;gap:4px}
+.table-wrap{display:none}
 
 /* ── Desktop ── */
 @media(min-width:769px){
   .modal-overlay.show{align-items:center}
-  .modal{border-radius:12px;padding:28px;max-width:520px}
+  .modal{border-radius:14px;max-width:520px}
   .modal-handle{display:none}
   .modal-actions{justify-content:flex-end}
   .modal-actions .btn{flex:none}
-  .toast{left:auto;right:20px;max-width:360px}
+  .toast{left:auto;right:24px;max-width:360px}
 }
 
 /* ── Mobile ── */
-@media(max-width:768px){
-  .header-inner{padding:0 12px}
-  .header-top{height:50px;gap:8px}
-  .logo img{height:30px}
-  .header-actions .desktop-only{display:none}
-  .search-input{width:140px;font-size:14px;padding:8px 10px 8px 30px}
-  .search-input:focus{width:160px}
-  .tabs-wrap{padding:0 4px}
-  .tab{padding:10px 10px;font-size:12px}
-  .stats-strip{padding:0 12px}
-  .stat{padding:10px 14px 10px 0}
-  .stat .sv{font-size:18px}
-  .content{padding:12px 12px 40px}
-  .table-wrap{display:none}
-  .mobile-cards{display:block}
-  .section{padding:16px}
-  .btn{padding:10px 16px;font-size:14px}
-  .btn-sm{padding:6px 12px;font-size:12px}
+@media(max-width:640px){
+  .page{padding:16px 14px 60px}
+  .page-head-left h1{font-size:22px}
+  .stats-banner{grid-template-columns:repeat(2,1fr);padding:18px 20px;gap:14px}
+  .sb-item .sb-val{font-size:26px}
+  .filter-bar{gap:6px}
+  .pill{padding:7px 12px;font-size:12px}
+  .lead-card{padding:16px 18px}
+  .lc-company{font-size:15px}
+  .lc-info{grid-template-columns:1fr;gap:6px}
+  .btn-call{font-size:13px;padding:11px 16px}
 }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="header-top">
-      <div class="logo">
-        <img src="logo.png" alt="Core Cleaning">
-      </div>
-      <div class="header-actions">
-        <div class="search-wrap">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" class="search-input" id="search" placeholder="Search name or company...">
-        </div>
-        <button class="btn desktop-only" onclick="showImportModal()">Import CSV</button>
-        <button class="btn desktop-only" onclick="exportLeads()">Export</button>
-        <button class="btn btn-primary" onclick="showAddLeadModal()">+ Add Lead</button>
-      </div>
+<div class="page">
+  <div class="page-head">
+    <div class="page-head-left">
+      <h1>Cold Calls</h1>
+      <p id="page-subtitle"></p>
     </div>
-    <div class="tabs-wrap" id="tabs">
-      <div class="tab active" data-tab="all">All <span class="ct" id="badge-all">0</span></div>
-      <div class="tab" data-tab="not-called">Not Called <span class="ct" id="badge-not-called">0</span></div>
-      <div class="tab" data-tab="called">Called <span class="ct" id="badge-called">0</span></div>
-      <div class="tab" data-tab="called-1">1x <span class="ct" id="badge-called-1">0</span></div>
-      <div class="tab" data-tab="called-2">2x <span class="ct" id="badge-called-2">0</span></div>
-      <div class="tab" data-tab="called-3">3+ <span class="ct" id="badge-called-3">0</span></div>
-      <div class="tab" data-tab="spoken">Spoken <span class="ct" id="badge-spoken">0</span></div>
-      <div class="tab" data-tab="booked">Booked <span class="ct" id="badge-booked">0</span></div>
-      <div class="tab" data-tab="not-interested">Not Interested <span class="ct" id="badge-not-interested">0</span></div>
-      <div class="tab" data-tab="templates">Templates</div>
-      <div class="tab" data-tab="settings">Settings</div>
+    <div class="page-head-right">
+      <img src="logo.png" alt="Core Cleaning">
     </div>
   </div>
-</div>
 
-<div class="stats-strip" id="stats-strip">
-  <div class="stats-inner" id="stats-inner"></div>
-</div>
+  <div class="stats-banner" id="stats-banner"></div>
 
-<div class="content" id="content"></div>
+  <div class="filter-bar" id="filter-bar">
+    <div class="pill active" data-tab="not-called">To Call <span class="pc" id="badge-not-called">0</span></div>
+    <div class="pill" data-tab="called">Contacted <span class="pc" id="badge-called">0</span></div>
+    <div class="pill" data-tab="booked">Booked <span class="pc" id="badge-booked">0</span></div>
+    <div class="pill" data-tab="not-interested">Lost <span class="pc" id="badge-not-interested">0</span></div>
+    <div class="pill" data-tab="all">All <span class="pc" id="badge-all">0</span></div>
+    <div class="pill" data-tab="templates">Templates</div>
+    <div class="pill" data-tab="settings">Settings</div>
+    <div class="pill-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search" placeholder="Search...">
+    </div>
+    <button class="btn-import" onclick="showImportModal()">+ Import</button>
+  </div>
+
+  <div id="content"></div>
+</div>
 
 <!-- Import Modal -->
-<div class="modal-overlay" id="import-modal">
-  <div class="modal">
-    <div class="modal-handle"></div><h3>Import leads</h3>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Upload a CSV with columns for name, company, phone, email, position. Headers are auto-matched.</p>
-    <div class="import-zone" onclick="document.getElementById('csv-file').click()">
-      <input type="file" id="csv-file" accept=".csv" onchange="handleCSV(event)">
-      <p style="font-size:13px;font-weight:600;margin-bottom:2px">Click to upload CSV</p>
-      <p style="font-size:11px;color:var(--text3)">or drag and drop</p>
-    </div>
-    <div id="import-preview" style="margin-top:12px;display:none"></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('import-modal')">Cancel</button>
-      <button class="btn btn-primary" id="import-confirm-btn" style="display:none" onclick="confirmImport()">Import</button>
-    </div>
+<div class="modal-overlay" id="import-modal"><div class="modal">
+  <div class="modal-handle"></div><h3>Import leads</h3>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Upload a CSV with columns for name, company, phone, email, position.</p>
+  <div class="import-zone" onclick="document.getElementById('csv-file').click()">
+    <input type="file" id="csv-file" accept=".csv" onchange="handleCSV(event)">
+    <p style="font-size:14px;font-weight:600;margin-bottom:2px">Click to upload CSV</p>
+    <p style="font-size:12px;color:var(--text3)">or drag and drop</p>
   </div>
-</div>
+  <div id="import-preview" style="margin-top:12px;display:none"></div>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('import-modal')">Cancel</button>
+    <button class="btn btn-primary" id="import-confirm-btn" style="display:none" onclick="confirmImport()">Import</button>
+  </div>
+</div></div>
 
 <!-- Call Outcome Modal -->
-<div class="modal-overlay" id="call-modal">
-  <div class="modal">
-    <div class="modal-handle"></div><h3>Log call — <span id="call-lead-name"></span></h3>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:12px" id="call-lead-info"></p>
-    <div class="form-group">
-      <label>Outcome</label>
-      <select id="call-outcome">
-        <option value="didnt-answer">Didn't Answer</option>
-        <option value="spoken">Spoken</option>
-        <option value="booked">Booked</option>
-        <option value="not-interested">Not Interested</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="call-notes" placeholder="What happened on this call..."></textarea>
-    </div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('call-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveCallOutcome()">Save</button>
-    </div>
+<div class="modal-overlay" id="call-modal"><div class="modal">
+  <div class="modal-handle"></div><h3>Log call — <span id="call-lead-name"></span></h3>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:12px" id="call-lead-info"></p>
+  <div class="form-group"><label>Outcome</label>
+    <select id="call-outcome">
+      <option value="didnt-answer">Didn't Answer</option>
+      <option value="spoken">Spoken</option>
+      <option value="booked">Booked</option>
+      <option value="not-interested">Not Interested</option>
+    </select>
   </div>
-</div>
+  <div class="form-group"><label>Notes</label><textarea id="call-notes" placeholder="What happened on this call..."></textarea></div>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('call-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveCallOutcome()">Save</button>
+  </div>
+</div></div>
 
 <!-- Add/Edit Lead Modal -->
-<div class="modal-overlay" id="lead-modal">
-  <div class="modal">
-    <div class="modal-handle"></div><h3 id="lead-modal-title">Add lead</h3>
-    <div class="form-group"><label>Contact name (ask for)</label><input id="lead-name" placeholder="John Smith"></div>
-    <div class="form-group"><label>Company</label><input id="lead-company" placeholder="ABC Corp"></div>
-    <div class="form-group"><label>Phone</label><input id="lead-phone" placeholder="04XX XXX XXX"></div>
-    <div class="form-group"><label>Email</label><input id="lead-email" placeholder="john@abc.com"></div>
-    <div class="form-group"><label>Position</label><input id="lead-position" placeholder="Office Manager"></div>
-    <div class="form-group"><label>Address</label><input id="lead-address" placeholder="123 Main St"></div>
-    <div class="form-group"><label>Notes</label><textarea id="lead-notes" placeholder="Any extra info..."></textarea></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('lead-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveLead()">Save</button>
-    </div>
+<div class="modal-overlay" id="lead-modal"><div class="modal">
+  <div class="modal-handle"></div><h3 id="lead-modal-title">Add lead</h3>
+  <div class="form-group"><label>Contact name (ask for)</label><input id="lead-name" placeholder="John Smith"></div>
+  <div class="form-group"><label>Company</label><input id="lead-company" placeholder="ABC Corp"></div>
+  <div class="form-group"><label>Phone</label><input id="lead-phone" placeholder="04XX XXX XXX"></div>
+  <div class="form-group"><label>Email</label><input id="lead-email" placeholder="john@abc.com"></div>
+  <div class="form-group"><label>Position</label><input id="lead-position" placeholder="Office Manager"></div>
+  <div class="form-group"><label>Address</label><input id="lead-address" placeholder="123 Main St"></div>
+  <div class="form-group"><label>Notes</label><textarea id="lead-notes" placeholder="Any extra info..."></textarea></div>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('lead-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveLead()">Save</button>
   </div>
-</div>
+</div></div>
 
 <!-- Email Modal -->
-<div class="modal-overlay" id="email-modal">
-  <div class="modal">
-    <div class="modal-handle"></div><h3>Send email — <span id="email-lead-name"></span></h3>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Pick a template. It auto-fills their details.</p>
-    <div id="email-template-list"></div>
-    <div class="form-group" style="margin-top:10px">
-      <label>Subject</label>
-      <input id="email-subject-preview" readonly style="background:var(--bg)">
-    </div>
-    <div class="form-group">
-      <label>Body</label>
-      <textarea id="email-body-preview" readonly style="height:130px;background:var(--bg);line-height:1.5"></textarea>
-    </div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('email-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="sendEmail()">Send</button>
-    </div>
+<div class="modal-overlay" id="email-modal"><div class="modal">
+  <div class="modal-handle"></div><h3>Send email — <span id="email-lead-name"></span></h3>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Pick a template. It auto-fills their details.</p>
+  <div id="email-template-list"></div>
+  <div class="form-group" style="margin-top:10px"><label>Subject</label><input id="email-subject-preview" readonly style="background:var(--bg)"></div>
+  <div class="form-group"><label>Body</label><textarea id="email-body-preview" readonly style="height:130px;background:var(--bg)"></textarea></div>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('email-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="sendEmail()">Send</button>
   </div>
-</div>
+</div></div>
 
 <!-- Lead Detail Modal -->
-<div class="modal-overlay" id="detail-modal">
-  <div class="modal" style="max-width:560px">
-    <div class="modal-handle"></div><div id="detail-content"></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('detail-modal')">Close</button>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="detail-modal"><div class="modal" style="max-width:560px">
+  <div class="modal-handle"></div><div id="detail-content"></div>
+  <div class="modal-actions"><button class="btn" onclick="closeModal('detail-modal')">Close</button></div>
+</div></div>
 
 <!-- Template Edit Modal -->
-<div class="modal-overlay" id="template-modal">
-  <div class="modal">
-    <div class="modal-handle"></div><h3 id="template-modal-title">Add template</h3>
-    <div class="form-group"><label>Name</label><input id="tpl-name" placeholder="e.g. Introduction Email"></div>
-    <div class="form-group"><label>Subject</label><input id="tpl-subject" placeholder="Use {{name}}, {{company}} as placeholders"></div>
-    <div class="form-group"><label>Body</label><textarea id="tpl-body" style="height:180px" placeholder="Hi {{name}},&#10;&#10;Use {{name}}, {{company}}, {{email}} as placeholders..."></textarea></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('template-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveTemplate()">Save</button>
-    </div>
+<div class="modal-overlay" id="template-modal"><div class="modal">
+  <div class="modal-handle"></div><h3 id="template-modal-title">Add template</h3>
+  <div class="form-group"><label>Name</label><input id="tpl-name" placeholder="e.g. Introduction Email"></div>
+  <div class="form-group"><label>Subject</label><input id="tpl-subject" placeholder="Use {{name}}, {{company}} as placeholders"></div>
+  <div class="form-group"><label>Body</label><textarea id="tpl-body" style="height:180px" placeholder="Hi {{name}},&#10;&#10;Use {{name}}, {{company}}, {{email}} as placeholders..."></textarea></div>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('template-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveTemplate()">Save</button>
   </div>
-</div>
+</div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -364,198 +305,175 @@ const SUPABASE_URL = 'https://cacqtgilqskwxxnxqgwv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhY3F0Z2lscXNrd3h4bnhxZ3d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzNjI4NTQsImV4cCI6MjA5NzkzODg1NH0.umlDh05G7vbOEyye6o2eX5IR7BLdw28HA4-aS7WfkX4';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let leads = [];
-let templates = [];
-let settings = JSON.parse(localStorage.getItem('cc_settings') || 'null') || {resendKey:'re_aTQfMrYT_8PtYYgBg4qq6ykkXY51kK9Si',resendFrom:'admin@corecleaning.services',resendFromName:'Core Cleaning'};
-let currentTab = 'all';
-let editingLeadId = null;
-let callingLeadId = null;
-let emailingLeadId = null;
-let editingTemplateId = null;
-let pendingCSVLeads = [];
-let selectedTemplateId = null;
+let leads=[], templates=[];
+let settings = JSON.parse(localStorage.getItem('cc_settings')||'null') || {resendKey:'re_aTQfMrYT_8PtYYgBg4qq6ykkXY51kK9Si',resendFrom:'admin@corecleaning.services',resendFromName:'Core Cleaning'};
+let currentTab='not-called', editingLeadId=null, callingLeadId=null, emailingLeadId=null, editingTemplateId=null, pendingCSVLeads=[], selectedTemplateId=null;
 
-function saveS() { localStorage.setItem('cc_settings', JSON.stringify(settings)); }
+function saveS(){localStorage.setItem('cc_settings',JSON.stringify(settings))}
 
-async function loadData() {
-  const [leadsRes, callsRes, tplRes] = await Promise.all([
-    sb.from('leads').select('*').order('created_at', {ascending: true}),
-    sb.from('calls').select('*').order('created_at', {ascending: true}),
-    sb.from('templates').select('*').order('created_at', {ascending: true}),
+async function loadData(){
+  const [lr,cr,tr] = await Promise.all([
+    sb.from('leads').select('*').order('created_at',{ascending:true}),
+    sb.from('calls').select('*').order('created_at',{ascending:true}),
+    sb.from('templates').select('*').order('created_at',{ascending:true}),
   ]);
-  const allCalls = callsRes.data || [];
-  leads = (leadsRes.data || []).map(l => {
-    const myCalls = allCalls.filter(c => c.lead_id === l.id).map(c => ({
-      id: c.id, outcome: c.outcome, notes: c.notes, date: c.created_at
-    }));
-    return { ...l, calls: myCalls, lastOutcome: l.last_outcome };
+  const allCalls = cr.data||[];
+  leads = (lr.data||[]).map(l => {
+    const mc = allCalls.filter(c=>c.lead_id===l.id).map(c=>({id:c.id,outcome:c.outcome,notes:c.notes,date:c.created_at}));
+    return {...l, calls:mc, lastOutcome:l.last_outcome};
   });
-  templates = tplRes.data || [];
+  templates = tr.data||[];
   render();
 }
 
-// SVG icon helpers
-const icons = {
-  phone: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
-  mail: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
-  edit: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>',
-  trash: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>',
+const ic = {
+  phone:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  mail:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
+  user:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  pin:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+  clock:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  log:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>',
+  copy:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
+  trash:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>',
+  edit:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>',
 };
 
-// Tabs
-document.getElementById('tabs').addEventListener('click', e => {
-  const tab = e.target.closest('.tab');
-  if (!tab) return;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-  currentTab = tab.dataset.tab;
+// Filter pills
+document.getElementById('filter-bar').addEventListener('click', e => {
+  const pill = e.target.closest('.pill[data-tab]');
+  if (!pill) return;
+  document.querySelectorAll('.pill[data-tab]').forEach(p=>p.classList.remove('active'));
+  pill.classList.add('active');
+  currentTab = pill.dataset.tab;
   render();
 });
+document.getElementById('search').addEventListener('input', ()=>render());
 
-document.getElementById('search').addEventListener('input', () => render());
-
-function getFiltered() {
-  let f = [...leads];
-  const q = document.getElementById('search').value.toLowerCase();
-  if (q) f = f.filter(l => (l.name||'').toLowerCase().includes(q) || (l.company||'').toLowerCase().includes(q) || (l.email||'').toLowerCase().includes(q) || (l.phone||'').toLowerCase().includes(q));
-  switch(currentTab) {
-    case 'not-called': return f.filter(l => !l.calls || !l.calls.length);
-    case 'called': return f.filter(l => l.calls && l.calls.length > 0);
-    case 'called-1': return f.filter(l => l.calls && l.calls.length === 1);
-    case 'called-2': return f.filter(l => l.calls && l.calls.length === 2);
-    case 'called-3': return f.filter(l => l.calls && l.calls.length >= 3);
-    case 'spoken': return f.filter(l => l.lastOutcome === 'spoken');
-    case 'booked': return f.filter(l => l.lastOutcome === 'booked');
-    case 'not-interested': return f.filter(l => l.lastOutcome === 'not-interested');
-    default: return f;
+function getFiltered(){
+  let f=[...leads];
+  const q=document.getElementById('search').value.toLowerCase();
+  if(q) f=f.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.company||'').toLowerCase().includes(q)||(l.email||'').toLowerCase().includes(q)||(l.phone||'').toLowerCase().includes(q));
+  switch(currentTab){
+    case 'not-called':return f.filter(l=>!l.calls||!l.calls.length);
+    case 'called':return f.filter(l=>l.calls&&l.calls.length>0);
+    case 'booked':return f.filter(l=>l.lastOutcome==='booked');
+    case 'not-interested':return f.filter(l=>l.lastOutcome==='not-interested');
+    default:return f;
   }
 }
 
-function counts() {
+function cts(){
   return {
-    all: leads.length,
-    'not-called': leads.filter(l => !l.calls || !l.calls.length).length,
-    called: leads.filter(l => l.calls && l.calls.length > 0).length,
-    'called-1': leads.filter(l => l.calls && l.calls.length === 1).length,
-    'called-2': leads.filter(l => l.calls && l.calls.length === 2).length,
-    'called-3': leads.filter(l => l.calls && l.calls.length >= 3).length,
-    spoken: leads.filter(l => l.lastOutcome === 'spoken').length,
-    booked: leads.filter(l => l.lastOutcome === 'booked').length,
-    'not-interested': leads.filter(l => l.lastOutcome === 'not-interested').length,
+    all:leads.length,
+    'not-called':leads.filter(l=>!l.calls||!l.calls.length).length,
+    called:leads.filter(l=>l.calls&&l.calls.length>0).length,
+    booked:leads.filter(l=>l.lastOutcome==='booked').length,
+    'not-interested':leads.filter(l=>l.lastOutcome==='not-interested').length,
   };
 }
 
-function render() {
-  const c = counts();
-  Object.entries(c).forEach(([k,v]) => { const el = document.getElementById('badge-'+k); if (el) el.textContent = v; });
-  const content = document.getElementById('content');
-  const strip = document.getElementById('stats-strip');
+function timeAgo(d){
+  const s=Math.floor((Date.now()-new Date(d))/1000);
+  if(s<60) return 'Just now';
+  if(s<3600) return Math.floor(s/60)+'m ago';
+  if(s<86400) return Math.floor(s/3600)+'h ago';
+  return Math.floor(s/86400)+'d ago';
+}
 
-  if (currentTab === 'templates') { strip.style.display='none'; return renderTemplates(content); }
-  if (currentTab === 'settings') { strip.style.display='none'; return renderSettings(content); }
+function firstName(n){return (n||'').split(' ')[0]||'Contact'}
 
-  // Stats strip
-  const totalCalls = leads.reduce((s,l) => s + (l.calls?l.calls.length:0), 0);
-  const rate = c.all ? Math.round(c.booked/c.all*100) : 0;
-  strip.style.display = '';
-  document.getElementById('stats-inner').innerHTML = `
-    <div class="stat teal"><span class="sv">${c.all}</span><span class="sl">Leads</span></div>
-    <div class="stat"><span class="sv">${c['not-called']}</span><span class="sl">To call</span></div>
-    <div class="stat"><span class="sv">${totalCalls}</span><span class="sl">Calls</span></div>
-    <div class="stat green"><span class="sv">${c.booked}</span><span class="sl">Booked</span></div>
-    <div class="stat amber"><span class="sv">${c.spoken}</span><span class="sl">Spoken</span></div>
-    <div class="stat rose"><span class="sv">${c['not-interested']}</span><span class="sl">Lost</span></div>
-    <div class="stat"><span class="sv">${rate}%</span><span class="sl">Book rate</span></div>
+function statusBadge(outcome){
+  const m={'not-called':'new',spoken:'spoken',booked:'booked','not-interested':'not-interested','didnt-answer':'didnt-answer'};
+  const labels={'not-called':'New',spoken:'Spoken',booked:'Booked','not-interested':'Lost','didnt-answer':'No Answer'};
+  return `<span class="lc-badge ${m[outcome]||'new'}">${labels[outcome]||'New'}</span>`;
+}
+
+function lastCallText(l){
+  if(!l.calls||!l.calls.length) return `${ic.clock} Never called`;
+  const last = l.calls[l.calls.length-1];
+  return `${ic.clock} Last called ${timeAgo(last.date)}`;
+}
+
+function render(){
+  const c=cts();
+  ['all','not-called','called','booked','not-interested'].forEach(k=>{const el=document.getElementById('badge-'+k);if(el)el.textContent=c[k]});
+
+  const totalCalls=leads.reduce((s,l)=>s+(l.calls?l.calls.length:0),0);
+  const sub=c['not-called']>0?c['not-called']+' leads waiting for a first call':'All leads contacted';
+  document.getElementById('page-subtitle').textContent=sub;
+
+  document.getElementById('stats-banner').innerHTML=`
+    <div class="sb-item"><div class="sb-label">Calls Today</div><div class="sb-val">${leads.reduce((s,l)=>s+(l.calls||[]).filter(c=>new Date(c.date).toDateString()===new Date().toDateString()).length,0)}</div></div>
+    <div class="sb-item"><div class="sb-label">To Call</div><div class="sb-val">${c['not-called']}</div></div>
+    <div class="sb-item"><div class="sb-label">Booked</div><div class="sb-val">${c.booked}</div></div>
+    <div class="sb-item"><div class="sb-label">Contacted</div><div class="sb-val">${c.called}<span>/${c.all}</span></div></div>
   `;
 
-  renderTable(content);
+  const content=document.getElementById('content');
+  if(currentTab==='templates') return renderTemplates(content);
+  if(currentTab==='settings') return renderSettings(content);
+  renderCards(content);
 }
 
-function stripeClass(outcome) {
-  return 'stripe-' + (outcome || 'not-called');
-}
-
-function renderTable(el) {
-  const data = getFiltered();
-  if (!data.length) {
-    el.innerHTML = '<div class="empty-state"><strong>No leads here</strong>Import a CSV or add leads to get started.</div>';
-    return;
-  }
-  el.innerHTML = `
-    <div class="table-wrap"><div class="table-scroll"><table>
-      <thead><tr><th>Contact / Company</th><th>Phone</th><th>Email</th><th>Position</th><th style="text-align:center;width:50px">Calls</th><th>Status</th><th style="width:120px">Actions</th></tr></thead>
-      <tbody>${data.map(l => `<tr class="${stripeClass(l.lastOutcome)}">
-        <td>
-          <a class="contact-name" onclick="showDetail('${l.id}')">${esc(l.name)}</a>
-          <span class="contact-company">${esc(l.company)}</span>
-        </td>
-        <td class="phone-val">${esc(l.phone)}</td>
-        <td class="email-val">${esc(l.email)}</td>
-        <td style="color:var(--text2)">${esc(l.position||'')}</td>
-        <td style="text-align:center"><span class="calls-num">${l.calls?l.calls.length:0}</span></td>
-        <td><span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span></td>
-        <td><div class="actions-cell">
-          <button class="btn-icon call" onclick="logCall('${l.id}')" title="Log call">${icons.phone}</button>
-          <button class="btn-icon email" onclick="openEmailModal('${l.id}')" title="Send email">${icons.mail}</button>
-          <button class="btn-icon" onclick="editLead('${l.id}')" title="Edit">${icons.edit}</button>
-          <button class="btn-icon del" onclick="deleteLead('${l.id}')" title="Delete">${icons.trash}</button>
-        </div></td>
-      </tr>`).join('')}</tbody>
-    </table></div></div>
-    <div class="mobile-cards">${data.map(l => `
-      <div class="lead-card" onclick="showDetail('${l.id}')">
-        <div class="lc-stripe s-${l.lastOutcome||'not-called'}"></div>
-        <div class="lc-top">
-          <div>
-            <div class="lc-name">${esc(l.name)}</div>
-            <div class="lc-company">${esc(l.company)}</div>
-          </div>
-          <span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span>
+function renderCards(el){
+  const data=getFiltered();
+  if(!data.length){el.innerHTML='<div class="empty-state"><strong>No leads here</strong>Import a CSV or add leads to get started.</div>';return;}
+  el.innerHTML=data.map(l=>`
+    <div class="lead-card">
+      <div class="lc-stripe s-${l.lastOutcome||'not-called'}"></div>
+      <div class="lc-head">
+        <div>
+          <div class="lc-company">${esc(l.company||l.name)}</div>
+          <div class="lc-added">Added ${timeAgo(l.created_at)}</div>
         </div>
-        <div class="lc-details">
-          <span>${icons.phone} ${esc(l.phone)}</span>
-          <span>${icons.mail} ${esc(l.email)}</span>
-        </div>
-        <div class="lc-bottom">
-          <div class="lc-meta">
-            <span class="status-pill" style="background:var(--bg);color:var(--text)">${l.calls?l.calls.length:0} calls</span>
-            ${l.position?'<span style="font-size:12px;color:var(--text3)">'+esc(l.position)+'</span>':''}
-          </div>
-          <div class="lc-actions" onclick="event.stopPropagation()">
-            <button class="btn-icon call" onclick="logCall('${l.id}')">${icons.phone}</button>
-            <button class="btn-icon email" onclick="openEmailModal('${l.id}')">${icons.mail}</button>
-          </div>
+        <div class="lc-badges">
+          <span class="lc-badge calls">${ic.phone} ${l.calls?l.calls.length:0} calls</span>
+          ${statusBadge(l.lastOutcome||'not-called')}
         </div>
       </div>
-    `).join('')}</div>`;
+      <div class="lc-info">
+        <div class="lc-info-row">${ic.user} Ask for ${esc(l.name)}</div>
+        <div class="lc-info-row">${ic.phone} ${esc(l.phone)}</div>
+        ${l.address?`<div class="lc-info-row">${ic.pin} ${esc(l.address)}</div>`:''}
+        <div class="lc-info-row">${ic.mail} ${esc(l.email)}</div>
+      </div>
+      <div class="lc-status">${lastCallText(l)}</div>
+      <div class="lc-actions">
+        <button class="btn-call" onclick="logCall('${l.id}')">${ic.phone} Call ${esc(firstName(l.name))}</button>
+        <button class="btn-action" onclick="logCall('${l.id}')" title="Log call">${ic.log} Log</button>
+        <button class="btn-action" onclick="openEmailModal('${l.id}')" title="Send email">${ic.mail}</button>
+        <button class="btn-action" onclick="editLead('${l.id}')" title="Edit">${ic.edit}</button>
+        <button class="btn-action danger" onclick="deleteLead('${l.id}')" title="Delete">${ic.trash}</button>
+      </div>
+    </div>
+  `).join('');
 }
 
-function renderTemplates(el) {
-  el.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <h2 style="font-size:16px;font-weight:700;letter-spacing:-.02em">Email Templates</h2>
+function renderTemplates(el){
+  el.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 style="font-size:18px;font-weight:700">Email Templates</h2>
       <button class="btn btn-primary" onclick="showAddTemplateModal()">+ Add Template</button>
     </div>
-    ${templates.map(t => `
+    ${templates.map(t=>`
       <div class="section">
         <div style="display:flex;justify-content:space-between;align-items:start">
-          <div><h3>${esc(t.name)}</h3><p style="font-size:11px;color:var(--text2);margin-top:2px">Subject: ${esc(t.subject)}</p></div>
-          <div style="display:flex;gap:4px">
+          <div><h3>${esc(t.name)}</h3><p style="font-size:12px;color:var(--text2);margin-top:2px">Subject: ${esc(t.subject)}</p></div>
+          <div style="display:flex;gap:6px">
             <button class="btn btn-sm" onclick="editTemplate('${t.id}')">Edit</button>
             <button class="btn btn-sm btn-danger" onclick="deleteTemplate('${t.id}')">Delete</button>
           </div>
         </div>
-        <pre style="margin-top:10px;font-size:12px;color:var(--text2);white-space:pre-wrap;font-family:'Outfit',sans-serif;line-height:1.6">${esc(t.body)}</pre>
+        <pre style="margin-top:10px;font-size:13px;color:var(--text2);white-space:pre-wrap;font-family:'Outfit',sans-serif;line-height:1.6">${esc(t.body)}</pre>
       </div>
-    `).join('')}
-  `;
+    `).join('')}`;
 }
 
-function renderSettings(el) {
-  el.innerHTML = `
+function renderSettings(el){
+  el.innerHTML=`
     <div class="section">
       <h3>Resend API</h3>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Connect your Resend account to send emails from this app.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Connect your Resend account to send emails.</p>
       <div class="form-group"><label>API Key</label><input id="resend-key" value="${esc(settings.resendKey||'')}" placeholder="re_xxxxxxxx"></div>
       <div class="form-group"><label>From Email</label><input id="resend-from" value="${esc(settings.resendFrom||'')}" placeholder="admin@corecleaning.services"></div>
       <div class="form-group"><label>From Name</label><input id="resend-from-name" value="${esc(settings.resendFromName||'Core Cleaning')}" placeholder="Core Cleaning"></div>
@@ -563,321 +481,130 @@ function renderSettings(el) {
     </div>
     <div class="section">
       <h3>Data</h3>
-      <div style="display:flex;gap:6px;margin-top:8px">
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
         <button class="btn" onclick="exportLeads()">Export leads (CSV)</button>
+        <button class="btn" onclick="showAddLeadModal()">+ Add lead manually</button>
         <button class="btn btn-danger" onclick="clearAllLeads()">Clear all leads</button>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-// Helpers
-function esc(s) { const d = document.createElement('div'); d.textContent = s||''; return d.innerHTML; }
-function outcomeLabel(o) {
-  return {'not-called':'Not Called','didnt-answer':"Didn't Answer",'spoken':'Spoken','booked':'Booked','not-interested':'Not Interested'}[o] || o;
-}
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+function outcomeLabel(o){return{'not-called':'Not Called','didnt-answer':"Didn't Answer",spoken:'Spoken',booked:'Booked','not-interested':'Not Interested'}[o]||o}
+function toast(m,t='success'){const e=document.createElement('div');e.className='toast '+t;e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),3000)}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
 
-function toast(msg, type='success') {
-  const t = document.createElement('div');
-  t.className = 'toast ' + type;
-  t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(() => t.remove(), 3000);
-}
+function showImportModal(){pendingCSVLeads=[];document.getElementById('csv-file').value='';document.getElementById('import-preview').style.display='none';document.getElementById('import-confirm-btn').style.display='none';document.getElementById('import-modal').classList.add('show')}
 
-function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-
-// Import
-function showImportModal() {
-  pendingCSVLeads = [];
-  document.getElementById('csv-file').value = '';
-  document.getElementById('import-preview').style.display = 'none';
-  document.getElementById('import-confirm-btn').style.display = 'none';
-  document.getElementById('import-modal').classList.add('show');
-}
-
-function handleCSV(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    const lines = ev.target.result.split(/\r?\n/).filter(l => l.trim());
-    if (lines.length < 2) { toast('CSV is empty','error'); return; }
-    const headers = parseCSV(lines[0]).map(h => h.toLowerCase().trim());
-    const cm = mapCols(headers);
-    pendingCSVLeads = [];
-    for (let i = 1; i < lines.length; i++) {
-      const v = parseCSV(lines[i]);
-      if (v.every(x => !x.trim())) continue;
-      pendingCSVLeads.push({
-        id: gid(), name: v[cm.name]||'', company: v[cm.company]||'',
-        phone: v[cm.phone]||'', email: v[cm.email]||'',
-        position: v[cm.position]||'', address: v[cm.address]||'',
-        notes: v[cm.notes]||'', calls: [], lastOutcome: null, createdAt: new Date().toISOString()
-      });
+function handleCSV(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const lines=ev.target.result.split(/\r?\n/).filter(l=>l.trim());
+    if(lines.length<2){toast('CSV is empty','error');return}
+    const headers=parseCSV(lines[0]).map(h=>h.toLowerCase().trim());
+    const cm=mapCols(headers);
+    pendingCSVLeads=[];
+    for(let i=1;i<lines.length;i++){
+      const v=parseCSV(lines[i]);if(v.every(x=>!x.trim()))continue;
+      pendingCSVLeads.push({name:v[cm.name]||'',company:v[cm.company]||'',phone:v[cm.phone]||'',email:v[cm.email]||'',position:v[cm.position]||'',address:v[cm.address]||'',notes:v[cm.notes]||''});
     }
-    const p = document.getElementById('import-preview');
-    p.style.display = 'block';
-    p.innerHTML = `<p style="font-size:12px;margin-bottom:6px;color:var(--emerald);font-weight:600">Found ${pendingCSVLeads.length} leads</p>
-      <div class="table-wrap" style="max-height:160px;overflow-y:auto"><table><thead><tr><th>Name</th><th>Company</th><th>Phone</th><th>Email</th></tr></thead><tbody>
-      ${pendingCSVLeads.slice(0,6).map(l => `<tr><td>${esc(l.name)}</td><td>${esc(l.company)}</td><td>${esc(l.phone)}</td><td>${esc(l.email)}</td></tr>`).join('')}
-      ${pendingCSVLeads.length > 6 ? `<tr><td colspan="4" style="color:var(--text3)">+ ${pendingCSVLeads.length-6} more</td></tr>` : ''}
-      </tbody></table></div>`;
-    document.getElementById('import-confirm-btn').style.display = 'block';
-  };
-  reader.readAsText(file);
+    const p=document.getElementById('import-preview');p.style.display='block';
+    p.innerHTML=`<p style="font-size:13px;margin-bottom:8px;color:var(--emerald);font-weight:600">Found ${pendingCSVLeads.length} leads</p>`;
+    document.getElementById('import-confirm-btn').style.display='block';
+  };reader.readAsText(file);
 }
 
-function parseCSV(line) {
-  const r = []; let c = ''; let q = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (q) { if (ch === '"' && line[i+1] === '"') { c += '"'; i++; } else if (ch === '"') q = false; else c += ch; }
-    else { if (ch === '"') q = true; else if (ch === ',') { r.push(c); c = ''; } else c += ch; }
-  }
-  r.push(c); return r;
+function parseCSV(line){const r=[];let c='',q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(q){if(ch==='"'&&line[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else{if(ch==='"')q=true;else if(ch===','){r.push(c);c=''}else c+=ch}}r.push(c);return r}
+
+function mapCols(h){
+  const f=(kws)=>{for(const k of kws){const i=h.findIndex(x=>x.includes(k));if(i!==-1)return i}return -1};
+  return{name:Math.max(0,f(['contact','name','person','who','first'])),company:Math.max(0,f(['company','business','organisation','organization','org'])),phone:Math.max(0,f(['phone','mobile','tel','number','cell'])),email:Math.max(0,f(['email','e-mail','mail'])),position:Math.max(0,f(['position','title','role','job'])),address:Math.max(0,f(['address','location','street','suburb'])),notes:Math.max(0,f(['note','comment','info','detail']))};
 }
 
-function mapCols(h) {
-  const f = (kws) => { for (const k of kws) { const i = h.findIndex(x => x.includes(k)); if (i !== -1) return i; } return -1; };
-  return {
-    name: Math.max(0, f(['contact','name','person','who','first'])),
-    company: Math.max(0, f(['company','business','organisation','organization','org'])),
-    phone: Math.max(0, f(['phone','mobile','tel','number','cell'])),
-    email: Math.max(0, f(['email','e-mail','mail'])),
-    position: Math.max(0, f(['position','title','role','job'])),
-    address: Math.max(0, f(['address','location','street','suburb'])),
-    notes: Math.max(0, f(['note','comment','info','detail']))
-  };
+async function confirmImport(){
+  const rows=pendingCSVLeads.map(l=>({name:l.name,company:l.company,phone:l.phone,email:l.email,position:l.position,address:l.address,notes:l.notes}));
+  const{error}=await sb.from('leads').insert(rows);
+  if(error){toast('Import error: '+error.message,'error');return}
+  toast(`Imported ${pendingCSVLeads.length} leads`);pendingCSVLeads=[];closeModal('import-modal');await loadData();
 }
 
-async function confirmImport() {
-  const rows = pendingCSVLeads.map(l => ({
-    name: l.name, company: l.company, phone: l.phone, email: l.email,
-    position: l.position, address: l.address, notes: l.notes
-  }));
-  const { error } = await sb.from('leads').insert(rows);
-  if (error) { toast('Import error: ' + error.message, 'error'); return; }
-  toast(`Imported ${pendingCSVLeads.length} leads`);
-  pendingCSVLeads = [];
-  closeModal('import-modal');
-  await loadData();
+function showAddLeadModal(){editingLeadId=null;document.getElementById('lead-modal-title').textContent='Add lead';['name','company','phone','email','position','address','notes'].forEach(f=>document.getElementById('lead-'+f).value='');document.getElementById('lead-modal').classList.add('show')}
+
+function editLead(id){const l=leads.find(x=>x.id===id);if(!l)return;editingLeadId=id;document.getElementById('lead-modal-title').textContent='Edit lead';['name','company','phone','email','position','address','notes'].forEach(f=>document.getElementById('lead-'+f).value=l[f]||'');document.getElementById('lead-modal').classList.add('show')}
+
+async function saveLead(){
+  const d={};['name','company','phone','email','position','address','notes'].forEach(f=>d[f]=document.getElementById('lead-'+f).value.trim());
+  if(!d.name&&!d.company){toast('Need a name or company','error');return}
+  if(editingLeadId){const{error}=await sb.from('leads').update(d).eq('id',editingLeadId);if(error){toast('Error: '+error.message,'error');return}}
+  else{const{error}=await sb.from('leads').insert([d]);if(error){toast('Error: '+error.message,'error');return}}
+  closeModal('lead-modal');toast(editingLeadId?'Lead updated':'Lead added');await loadData();
 }
 
-// Lead CRUD
-function showAddLeadModal() {
-  editingLeadId = null;
-  document.getElementById('lead-modal-title').textContent = 'Add lead';
-  ['name','company','phone','email','position','address','notes'].forEach(f => document.getElementById('lead-'+f).value = '');
-  document.getElementById('lead-modal').classList.add('show');
+async function deleteLead(id){if(!confirm('Delete this lead?'))return;await sb.from('leads').delete().eq('id',id);toast('Lead deleted');await loadData()}
+
+function logCall(id){const l=leads.find(x=>x.id===id);if(!l)return;callingLeadId=id;document.getElementById('call-lead-name').textContent=l.name;document.getElementById('call-lead-info').textContent=`${l.company} — ${l.phone}`;document.getElementById('call-outcome').value='didnt-answer';document.getElementById('call-notes').value='';document.getElementById('call-modal').classList.add('show')}
+
+async function saveCallOutcome(){
+  const l=leads.find(x=>x.id===callingLeadId);if(!l)return;
+  const outcome=document.getElementById('call-outcome').value,notes=document.getElementById('call-notes').value.trim();
+  await sb.from('calls').insert([{lead_id:l.id,outcome,notes}]);
+  await sb.from('leads').update({last_outcome:outcome}).eq('id',l.id);
+  closeModal('call-modal');toast('Call logged — '+outcomeLabel(outcome));await loadData();
 }
 
-function editLead(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  editingLeadId = id;
-  document.getElementById('lead-modal-title').textContent = 'Edit lead';
-  ['name','company','phone','email','position','address','notes'].forEach(f => document.getElementById('lead-'+f).value = l[f]||'');
-  document.getElementById('lead-modal').classList.add('show');
-}
-
-async function saveLead() {
-  const d = {};
-  ['name','company','phone','email','position','address','notes'].forEach(f => d[f] = document.getElementById('lead-'+f).value.trim());
-  if (!d.name && !d.company) { toast('Need a name or company','error'); return; }
-  if (editingLeadId) {
-    const { error } = await sb.from('leads').update(d).eq('id', editingLeadId);
-    if (error) { toast('Error: ' + error.message, 'error'); return; }
-  } else {
-    const { error } = await sb.from('leads').insert([d]);
-    if (error) { toast('Error: ' + error.message, 'error'); return; }
-  }
-  closeModal('lead-modal');
-  toast(editingLeadId ? 'Lead updated' : 'Lead added');
-  await loadData();
-}
-
-async function deleteLead(id) {
-  if (!confirm('Delete this lead?')) return;
-  const { error } = await sb.from('leads').delete().eq('id', id);
-  if (error) { toast('Error: ' + error.message, 'error'); return; }
-  toast('Lead deleted');
-  await loadData();
-}
-
-// Call logging
-function logCall(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  callingLeadId = id;
-  document.getElementById('call-lead-name').textContent = l.name;
-  document.getElementById('call-lead-info').textContent = `${l.company} — ${l.phone}`;
-  document.getElementById('call-outcome').value = 'didnt-answer';
-  document.getElementById('call-notes').value = '';
-  document.getElementById('call-modal').classList.add('show');
-}
-
-async function saveCallOutcome() {
-  const l = leads.find(x => x.id === callingLeadId); if (!l) return;
-  const outcome = document.getElementById('call-outcome').value;
-  const notes = document.getElementById('call-notes').value.trim();
-  const { error: callErr } = await sb.from('calls').insert([{ lead_id: l.id, outcome, notes }]);
-  if (callErr) { toast('Error: ' + callErr.message, 'error'); return; }
-  const { error: leadErr } = await sb.from('leads').update({ last_outcome: outcome }).eq('id', l.id);
-  if (leadErr) { toast('Error: ' + leadErr.message, 'error'); return; }
-  closeModal('call-modal');
-  toast('Call logged — ' + outcomeLabel(outcome));
-  await loadData();
-  if (outcome === 'booked') {
-    const row = document.querySelector(`tr.stripe-booked`);
-    if (row) { row.classList.add('flash-booked'); row.addEventListener('animationend', () => row.classList.remove('flash-booked'), {once:true}); }
-  }
-}
-
-// Detail
-function showDetail(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  const calls = (l.calls||[]).slice().reverse();
-  document.getElementById('detail-content').innerHTML = `
-    <h3 style="font-size:18px;letter-spacing:-.03em">${esc(l.name)}</h3>
-    <p style="color:var(--text2);margin:2px 0 14px;font-size:13px">${esc(l.company)} ${l.position ? '— '+esc(l.position) : ''}</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-      <div><span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;font-weight:600">Phone</span><br><span style="font-size:13px">${esc(l.phone)}</span></div>
-      <div><span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;font-weight:600">Email</span><br><span class="email-val" style="font-size:13px">${esc(l.email)}</span></div>
-      <div><span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;font-weight:600">Address</span><br><span style="font-size:13px">${esc(l.address||'—')}</span></div>
-      <div><span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;font-weight:600">Status</span><br><span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span></div>
+function showDetail(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;
+  const calls=(l.calls||[]).slice().reverse();
+  document.getElementById('detail-content').innerHTML=`
+    <h3 style="font-size:20px">${esc(l.company||l.name)}</h3>
+    <p style="color:var(--text2);margin:2px 0 14px;font-size:14px">${esc(l.name)} ${l.position?'— '+esc(l.position):''}</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div><span style="font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600">Phone</span><br><span style="font-size:14px">${esc(l.phone)}</span></div>
+      <div><span style="font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600">Email</span><br><span style="font-size:14px;color:var(--blue)">${esc(l.email)}</span></div>
+      <div><span style="font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600">Address</span><br><span style="font-size:14px">${esc(l.address||'—')}</span></div>
+      <div><span style="font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600">Status</span><br><span class="status-pill status-${l.lastOutcome||'not-called'}">${outcomeLabel(l.lastOutcome||'not-called')}</span></div>
     </div>
-    ${l.notes ? `<div style="margin-bottom:12px"><span style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;font-weight:600">Notes</span><p style="font-size:13px;margin-top:3px;line-height:1.5">${esc(l.notes)}</p></div>` : ''}
+    ${l.notes?`<div style="margin-bottom:12px"><span style="font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600">Notes</span><p style="font-size:14px;margin-top:4px;line-height:1.5">${esc(l.notes)}</p></div>`:''}
     <div class="call-history">
       <h4>Call history (${calls.length})</h4>
-      ${calls.length ? calls.map(c => `
-        <div class="call-entry">
-          <span><span class="status-pill status-${c.outcome}" style="margin-right:6px">${outcomeLabel(c.outcome)}</span><span style="color:var(--text2);font-size:11px">${c.notes?esc(c.notes):''}</span></span>
-          <span style="color:var(--text3);font-size:10px;white-space:nowrap">${new Date(c.date).toLocaleString()}</span>
-        </div>
-      `).join('') : '<p style="font-size:12px;color:var(--text3)">No calls yet</p>'}
+      ${calls.length?calls.map(c=>`<div class="call-entry"><span><span class="status-pill status-${c.outcome}" style="margin-right:6px">${outcomeLabel(c.outcome)}</span><span style="color:var(--text2)">${c.notes?esc(c.notes):''}</span></span><span style="color:var(--text3);font-size:11px;white-space:nowrap">${timeAgo(c.date)}</span></div>`).join(''):'<p style="font-size:13px;color:var(--text3)">No calls yet</p>'}
     </div>
-    <div style="margin-top:14px;display:flex;gap:6px">
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="closeModal('detail-modal');logCall('${l.id}')">Log call</button>
       <button class="btn" onclick="closeModal('detail-modal');openEmailModal('${l.id}')">Send email</button>
       <button class="btn" onclick="closeModal('detail-modal');editLead('${l.id}')">Edit</button>
-    </div>
-  `;
+    </div>`;
   document.getElementById('detail-modal').classList.add('show');
 }
 
-// Email
-function openEmailModal(id) {
-  const l = leads.find(x => x.id === id); if (!l) return;
-  emailingLeadId = id;
-  selectedTemplateId = templates.length ? templates[0].id : null;
-  document.getElementById('email-lead-name').textContent = l.name;
-  renderEmailTpls(); updateEmailPreview();
-  document.getElementById('email-modal').classList.add('show');
+function openEmailModal(id){const l=leads.find(x=>x.id===id);if(!l)return;emailingLeadId=id;selectedTemplateId=templates.length?templates[0].id:null;document.getElementById('email-lead-name').textContent=l.name;renderEmailTpls();updateEmailPreview();document.getElementById('email-modal').classList.add('show')}
+
+function renderEmailTpls(){document.getElementById('email-template-list').innerHTML=templates.map(t=>`<div class="template-card ${t.id===selectedTemplateId?'selected':''}" onclick="selectedTemplateId='${t.id}';renderEmailTpls();updateEmailPreview()"><h4>${esc(t.name)}</h4><p>${esc(t.subject).slice(0,60)}</p></div>`).join('')}
+
+function updateEmailPreview(){const tpl=templates.find(t=>t.id===selectedTemplateId),l=leads.find(x=>x.id===emailingLeadId);if(!tpl||!l)return;const r=s=>s.replace(/\{\{name\}\}/g,l.name).replace(/\{\{company\}\}/g,l.company).replace(/\{\{email\}\}/g,l.email);document.getElementById('email-subject-preview').value=r(tpl.subject);document.getElementById('email-body-preview').value=r(tpl.body)}
+
+async function sendEmail(){
+  const l=leads.find(x=>x.id===emailingLeadId);if(!l||!l.email){toast('No email address','error');return}
+  if(!settings.resendKey){toast('Set Resend API key in Settings','error');return}
+  const subject=document.getElementById('email-subject-preview').value,body=document.getElementById('email-body-preview').value;
+  try{const res=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'Authorization':'Bearer '+settings.resendKey,'Content-Type':'application/json'},body:JSON.stringify({from:`${settings.resendFromName||'Core Cleaning'} <${settings.resendFrom||'admin@corecleaning.services'}>`,to:[l.email],subject,text:body})});const data=await res.json();if(res.ok){toast('Email sent to '+l.email);await sb.from('calls').insert([{lead_id:l.id,outcome:'email-sent',notes:'Sent: '+subject}])}else{toast('Error: '+(data.message||'Failed'),'error')}}catch(err){toast('Network error: '+err.message,'error')}
+  closeModal('email-modal');await loadData();
 }
 
-function renderEmailTpls() {
-  document.getElementById('email-template-list').innerHTML = templates.map(t => `
-    <div class="template-card ${t.id===selectedTemplateId?'selected':''}" onclick="selectedTemplateId='${t.id}';renderEmailTpls();updateEmailPreview()">
-      <h4>${esc(t.name)}</h4><p>${esc(t.subject).slice(0,60)}</p>
-    </div>`).join('');
-}
+function showAddTemplateModal(){editingTemplateId=null;document.getElementById('template-modal-title').textContent='Add template';['tpl-name','tpl-subject','tpl-body'].forEach(f=>document.getElementById(f).value='');document.getElementById('template-modal').classList.add('show')}
 
-function updateEmailPreview() {
-  const tpl = templates.find(t => t.id === selectedTemplateId);
-  const l = leads.find(x => x.id === emailingLeadId);
-  if (!tpl || !l) return;
-  const rep = s => s.replace(/\{\{name\}\}/g, l.name).replace(/\{\{company\}\}/g, l.company).replace(/\{\{email\}\}/g, l.email);
-  document.getElementById('email-subject-preview').value = rep(tpl.subject);
-  document.getElementById('email-body-preview').value = rep(tpl.body);
-}
+function editTemplate(id){const t=templates.find(x=>x.id===id);if(!t)return;editingTemplateId=id;document.getElementById('template-modal-title').textContent='Edit template';document.getElementById('tpl-name').value=t.name;document.getElementById('tpl-subject').value=t.subject;document.getElementById('tpl-body').value=t.body;document.getElementById('template-modal').classList.add('show')}
 
-async function sendEmail() {
-  const l = leads.find(x => x.id === emailingLeadId);
-  if (!l || !l.email) { toast('No email address','error'); return; }
-  if (!settings.resendKey) { toast('Set Resend API key in Settings','error'); return; }
-  const subject = document.getElementById('email-subject-preview').value;
-  const body = document.getElementById('email-body-preview').value;
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + settings.resendKey, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: `${settings.resendFromName||'Core Cleaning'} <${settings.resendFrom||'admin@corecleaning.services'}>`,
-        to: [l.email], subject, text: body
-      })
-    });
-    const data = await res.json();
-    if (res.ok) {
-      toast('Email sent to ' + l.email);
-      await sb.from('calls').insert([{ lead_id: l.id, outcome: 'email-sent', notes: 'Sent: ' + subject }]);
-    } else { toast('Error: ' + (data.message || 'Failed'), 'error'); }
-  } catch (err) { toast('Network error: ' + err.message, 'error'); }
-  closeModal('email-modal'); await loadData();
-}
+async function saveTemplate(){const d={name:document.getElementById('tpl-name').value.trim(),subject:document.getElementById('tpl-subject').value.trim(),body:document.getElementById('tpl-body').value.trim()};if(!d.name){toast('Template needs a name','error');return}if(editingTemplateId){await sb.from('templates').update(d).eq('id',editingTemplateId)}else{await sb.from('templates').insert([d])}closeModal('template-modal');toast(editingTemplateId?'Template updated':'Template added');await loadData()}
 
-// Templates
-function showAddTemplateModal() {
-  editingTemplateId = null;
-  document.getElementById('template-modal-title').textContent = 'Add template';
-  document.getElementById('tpl-name').value = '';
-  document.getElementById('tpl-subject').value = '';
-  document.getElementById('tpl-body').value = '';
-  document.getElementById('template-modal').classList.add('show');
-}
+async function deleteTemplate(id){if(!confirm('Delete this template?'))return;await sb.from('templates').delete().eq('id',id);toast('Template deleted');await loadData()}
 
-function editTemplate(id) {
-  const t = templates.find(x => x.id === id); if (!t) return;
-  editingTemplateId = id;
-  document.getElementById('template-modal-title').textContent = 'Edit template';
-  document.getElementById('tpl-name').value = t.name;
-  document.getElementById('tpl-subject').value = t.subject;
-  document.getElementById('tpl-body').value = t.body;
-  document.getElementById('template-modal').classList.add('show');
-}
+function saveResendSettings(){settings.resendKey=document.getElementById('resend-key').value.trim();settings.resendFrom=document.getElementById('resend-from').value.trim();settings.resendFromName=document.getElementById('resend-from-name').value.trim();saveS();toast('Settings saved')}
 
-async function saveTemplate() {
-  const d = { name: document.getElementById('tpl-name').value.trim(), subject: document.getElementById('tpl-subject').value.trim(), body: document.getElementById('tpl-body').value.trim() };
-  if (!d.name) { toast('Template needs a name','error'); return; }
-  if (editingTemplateId) {
-    await sb.from('templates').update(d).eq('id', editingTemplateId);
-  } else {
-    await sb.from('templates').insert([d]);
-  }
-  closeModal('template-modal');
-  toast(editingTemplateId ? 'Template updated' : 'Template added');
-  await loadData();
-}
+function exportLeads(){const h=['Name','Company','Phone','Email','Position','Address','Notes','Status','Calls'];const rows=leads.map(l=>[l.name,l.company,l.phone,l.email,l.position||'',l.address||'',l.notes||'',outcomeLabel(l.lastOutcome||'not-called'),l.calls?l.calls.length:0]);const csv=[h,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='leads_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
 
-async function deleteTemplate(id) {
-  if (!confirm('Delete this template?')) return;
-  await sb.from('templates').delete().eq('id', id);
-  toast('Template deleted');
-  await loadData();
-}
-
-// Settings
-function saveResendSettings() {
-  settings.resendKey = document.getElementById('resend-key').value.trim();
-  settings.resendFrom = document.getElementById('resend-from').value.trim();
-  settings.resendFromName = document.getElementById('resend-from-name').value.trim();
-  saveS(); toast('Settings saved');
-}
-
-// Export
-function exportLeads() {
-  const h = ['Name','Company','Phone','Email','Position','Address','Notes','Status','Calls'];
-  const rows = leads.map(l => [l.name, l.company, l.phone, l.email, l.position||'', l.address||'', l.notes||'', outcomeLabel(l.lastOutcome||'not-called'), l.calls?l.calls.length:0]);
-  const csv = [h, ...rows].map(r => r.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download = 'leads_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
-}
-
-async function clearAllLeads() {
-  if (!confirm('Delete ALL leads? Cannot be undone.')) return;
-  await sb.from('calls').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  await sb.from('leads').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  toast('All leads deleted');
-  await loadData();
-}
+async function clearAllLeads(){if(!confirm('Delete ALL leads? Cannot be undone.'))return;await sb.from('calls').delete().neq('id','00000000-0000-0000-0000-000000000000');await sb.from('leads').delete().neq('id','00000000-0000-0000-0000-000000000000');toast('All leads deleted');await loadData()}
 
 loadData();
 </script>
