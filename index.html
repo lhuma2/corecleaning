@@ -436,6 +436,7 @@ function renderCards(el){
         <div class="lc-info-row">${ic.phone} ${esc(l.phone)}</div>
         ${l.address?`<div class="lc-info-row">${ic.pin} ${esc(l.address)}</div>`:''}
         <div class="lc-info-row">${ic.mail} ${esc(l.email)}</div>
+        ${l.industry?`<div class="lc-info-row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg> ${esc(l.industry)}</div>`:''}
       </div>
       <div class="lc-status">${lastCallText(l)}</div>
       <div class="lc-actions">
@@ -501,13 +502,32 @@ function handleCSV(e){
   const reader=new FileReader();
   reader.onload=function(ev){
     const lines=ev.target.result.split(/\r?\n/).filter(l=>l.trim());
-    if(lines.length<2){toast('CSV is empty','error');return}
-    const headers=parseCSV(lines[0]).map(h=>h.toLowerCase().trim());
-    const cm=mapCols(headers);
+    if(lines.length<1){toast('CSV is empty','error');return}
+    const first=parseCSV(lines[0]);
+    const firstLower=first.map(h=>h.toLowerCase().trim());
+    const hasHeaders=firstLower.some(h=>['name','company','email','phone','first','contact'].some(k=>h.includes(k)));
+    const startRow=hasHeaders?1:0;
     pendingCSVLeads=[];
-    for(let i=1;i<lines.length;i++){
-      const v=parseCSV(lines[i]);if(v.every(x=>!x.trim()))continue;
-      pendingCSVLeads.push({name:v[cm.name]||'',company:v[cm.company]||'',phone:v[cm.phone]||'',email:v[cm.email]||'',position:v[cm.position]||'',address:v[cm.address]||'',notes:v[cm.notes]||''});
+    if(hasHeaders){
+      const cm=mapCols(firstLower);
+      for(let i=startRow;i<lines.length;i++){
+        const v=parseCSV(lines[i]);if(v.every(x=>!x.trim()))continue;
+        pendingCSVLeads.push({name:v[cm.name]||'',company:v[cm.company]||'',phone:v[cm.phone]||'',email:v[cm.email]||'',position:v[cm.position]||'',address:v[cm.address]||'',notes:v[cm.notes]||'',industry:v[cm.industry]||''});
+      }
+    } else {
+      for(let i=0;i<lines.length;i++){
+        const v=parseCSV(lines[i]);if(v.every(x=>!x.trim()))continue;
+        pendingCSVLeads.push({
+          name:((v[0]||'')+ ' '+(v[1]||'')).trim(),
+          phone:v[2]||'',
+          company:v[3]||'',
+          position:v[4]||'',
+          email:v[5]||'',
+          industry:v[6]||'',
+          address:v[8]||'',
+          notes:''
+        });
+      }
     }
     const p=document.getElementById('import-preview');p.style.display='block';
     p.innerHTML=`<p style="font-size:13px;margin-bottom:8px;color:var(--emerald);font-weight:600">Found ${pendingCSVLeads.length} leads</p>`;
@@ -519,11 +539,11 @@ function parseCSV(line){const r=[];let c='',q=false;for(let i=0;i<line.length;i+
 
 function mapCols(h){
   const f=(kws)=>{for(const k of kws){const i=h.findIndex(x=>x.includes(k));if(i!==-1)return i}return -1};
-  return{name:Math.max(0,f(['contact','name','person','who','first'])),company:Math.max(0,f(['company','business','organisation','organization','org'])),phone:Math.max(0,f(['phone','mobile','tel','number','cell'])),email:Math.max(0,f(['email','e-mail','mail'])),position:Math.max(0,f(['position','title','role','job'])),address:Math.max(0,f(['address','location','street','suburb'])),notes:Math.max(0,f(['note','comment','info','detail']))};
+  return{name:Math.max(0,f(['contact','name','person','who','first'])),company:Math.max(0,f(['company','business','organisation','organization','org'])),phone:Math.max(0,f(['phone','mobile','tel','number','cell'])),email:Math.max(0,f(['email','e-mail','mail'])),position:Math.max(0,f(['position','title','role','job'])),address:Math.max(0,f(['address','location','street','suburb'])),notes:Math.max(0,f(['note','comment','info','detail'])),industry:Math.max(0,f(['industry','sector','category','type']))};
 }
 
 async function confirmImport(){
-  const rows=pendingCSVLeads.map(l=>({name:l.name,company:l.company,phone:l.phone,email:l.email,position:l.position,address:l.address,notes:l.notes}));
+  const rows=pendingCSVLeads.map(l=>({name:l.name,company:l.company,phone:l.phone,email:l.email,position:l.position,address:l.address,notes:l.notes,industry:l.industry}));
   const{error}=await sb.from('leads').insert(rows);
   if(error){toast('Import error: '+error.message,'error');return}
   toast(`Imported ${pendingCSVLeads.length} leads`);pendingCSVLeads=[];closeModal('import-modal');await loadData();
